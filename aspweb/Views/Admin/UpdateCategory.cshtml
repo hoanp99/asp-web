@@ -1,0 +1,51 @@
+﻿@model aspweb.Models.tbl_category
+
+@{
+    ViewBag.Title = "UpdateCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="bg-mattBlackLight my-2 p-3 text-center">
+            <span class="title">Thêm danh mục mới</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="bg-mattBlackLight my-2 p-3">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model => model.id)
+
+                <div class="form-group">
+                    <label>Tên danh mục:</label>
+                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <label>Mô tả:</label>
+                    @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+
+
+
+                <input type="submit" class="btn btn-primary my-2" value="Sửa" />
+
+
+            }
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="bg-mattBlackLight my-2 p-3"></div>
+    </div>
+</div>
+
+

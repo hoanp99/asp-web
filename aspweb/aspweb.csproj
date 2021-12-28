@@ -184,8 +184,11 @@
     <Content Include="Resources\Admin\css\style.css.map" />
     <Content Include="Views\Admin\Home.cshtml" />
     <Content Include="Views\Admin\Categories.cshtml" />
-    <Content Include="Views\Admin\CreateCategories.cshtml" />
-    <Content Include="Views\Admin\DeleteCategories.cshtml" />
+    <Content Include="Views\Admin\CreateCategory.cshtml" />
+    <Content Include="Views\Admin\DeleteCategory.cshtml" />
+    <Content Include="Views\Admin\UpdateCategory.cshtml" />
+    <Content Include="Views\Admin\Accounts.cshtml" />
+    <Content Include="Views\Admin\CreateAcount.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

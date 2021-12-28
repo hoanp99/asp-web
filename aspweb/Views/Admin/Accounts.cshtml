@@ -1,11 +1,14 @@
-﻿@model PagedList.IPagedList<aspweb.Models.tbl_category>
+﻿@model PagedList.IPagedList<aspweb.Models.tbl_users>
 @using PagedList.Mvc;
 
 
 @{
-    ViewBag.Title = "Danh mục";
+    ViewBag.Title = "Accounts";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+
+
 
 <div class="row">
     <div class="col-md-12">
@@ -23,7 +26,7 @@
     </div>
     <div class="col-md-4">
         <div class="bg-mattBlackLight my-2 p-3 text-center">
-            <a class="btn btn-primary" href="@Url.Action("CreateCategory", "Admin")" role="button">Thêm mới</a>
+            <a class="btn btn-primary" href="@Url.Action("CreateCategories", "Admin")" role="button">Thêm mới</a>
         </div>
     </div>
 </div>
@@ -36,46 +39,46 @@
                         #
                     </th>
                     <th scope="col">
-                        Mã danh mục
+                        Tên tài khoản
                     </th>
                     <th scope="col">
-                        Tên danh mục
+                        Mật khẩu
                     </th>
                     <th scope="col">
-                        Mô tả
+                        Vai trò
                     </th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @{ 
+                @{
                     int i = 1;
                 }
                 @foreach (var item in Model)
                 {
-                <tr>
-                    <td class="align-middle">
-                        @i
-                    </td>
-                    @{
-                        i++;
-                    }
-                    <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.id)
-                    </td>
-                    <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.name)
-                    </td>
-                    <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.description)
-                    </td>
-                    <td>
-                        <input type="button" class="btn btn-danger" value="Chi Tiết" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
-                        | <input type="button" class="btn btn-danger" value="Sửa" onclick="location.href='@Url.Action("UpdateCategory", "Admin", new { id = item.id })'" />
-                        | <input type="button" class="btn btn-danger" value="Xóa" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
+                    <tr>
+                        <td class="align-middle">
+                            @i
+                        </td>
+                        @{
+                            i++;
+                        }
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.username)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.password)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.tbl_roles)
+                        </td>
+                        <td>
+                            <input type="button" class="btn btn-danger" value="Chi Tiết" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
+                            | <input type="button" class="btn btn-danger" value="Sửa" onclick="location.href='@Url.Action("UpdateCategory", "Admin", new { id = item.id })'" />
+                            | <input type="button" class="btn btn-danger" value="Xóa" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
 
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
 
                 }
 
@@ -86,4 +89,6 @@
         @Html.PagedListPager(Model, page => Url.Action("Categories", "Admin", new { page }))
     </div>
 </div>
+
+
 

@@ -20,6 +20,7 @@ namespace aspweb.Controllers
             return View();
         }
 
+        #region Categories
         public ActionResult Categories(int? page)
         {
             var categories = db.tbl_category.Select(p => p);
@@ -29,14 +30,14 @@ namespace aspweb.Controllers
             return View(categories.ToPagedList(pageNumber, pageSize));       
         }
 
-        public ActionResult CreateCategories()
+        public ActionResult CreateCategory()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateCategories([Bind(Include = "id,name,description")] tbl_category category)
+        public ActionResult CreateCategory([Bind(Include = "name,description")] tbl_category category)
         {
             DateTime now = DateTime.Now;
             category.created_date = now;
@@ -49,7 +50,52 @@ namespace aspweb.Controllers
             return View(category);
         }
 
-        public ActionResult DeleteCategories(string id)
+        public ActionResult DetailCategory(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_category category = db.tbl_category.Find(Int32.Parse(id));
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(category);
+        }
+
+        public ActionResult UpdateCategory(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_category category = db.tbl_category.Find(Int32.Parse(id));
+            if (category == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateCategory([Bind(Include = "id,name,description")] tbl_category category)
+        {
+            DateTime now = DateTime.Now;
+            category.updated_date = now;
+            if (ModelState.IsValid)
+            {
+                db.Entry(category).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Categories", "Admin");
+            }
+            return View(category);
+        }
+
+        public ActionResult DeleteCategory(string id)
         {
             if(id == null)
             {
@@ -65,28 +111,64 @@ namespace aspweb.Controllers
 
         [HttpPost, ActionName("DeleteCategories")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteCategoriesConfirmed(string id)
+        public ActionResult DeleteCategoryConfirmed(string id)
         {
             tbl_category category = db.tbl_category.Find(Int32.Parse(id));
             db.tbl_category.Remove(category);
             db.SaveChanges();
             return RedirectToAction("Categories", "Admin");
         }
+        #endregion
 
-
+        #region Products
         public ActionResult Products()
         {
             return View();
         }
 
-        public ActionResult SaleOrders()
+        public ActionResult CreateProducts()
         {
             return View();
         }
 
+        public ActionResult UpdateProducts()
+        {
+            return View();
+        }
+
+        public ActionResult DetailProducts()
+        {
+            return View();
+        }
+        #endregion
+
+        #region SaleOrder
+        public ActionResult SaleOrders()
+        {
+            return View();
+        }
+        #endregion
+
+        #region Accounts
         public ActionResult Accounts()
         {
             return View();
         }
+
+        public ActionResult CreateAccount()
+        {
+            return View();
+        }
+
+        public ActionResult UpdateAccount()
+        {
+            return View();
+        }
+
+        public ActionResult DeleteAccount()
+        {
+            return View();
+        }
+        #endregion
     }
 }

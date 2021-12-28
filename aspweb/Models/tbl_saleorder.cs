@@ -14,7 +14,6 @@ namespace aspweb.Models
             tbl_saleorder_products = new HashSet<tbl_saleorder_products>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
@@ -33,7 +32,7 @@ namespace aspweb.Models
 
         public int? updated_by { get; set; }
 
-        public int? status { get; set; }
+        public byte? status { get; set; }
 
         [StringLength(100)]
         public string customer_name { get; set; }

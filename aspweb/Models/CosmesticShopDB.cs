@@ -70,13 +70,10 @@ namespace aspweb.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_roles>()
-                .Property(e => e.description)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<tbl_roles>()
                 .HasMany(e => e.tbl_users)
-                .WithMany(e => e.tbl_roles)
-                .Map(m => m.ToTable("tbl_users_roles").MapLeftKey("role_id").MapRightKey("user_id"));
+                .WithRequired(e => e.tbl_roles)
+                .HasForeignKey(e => e.role_id)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<tbl_saleorder>()
                 .Property(e => e.code)

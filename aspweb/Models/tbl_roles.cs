@@ -14,7 +14,6 @@ namespace aspweb.Models
             tbl_users = new HashSet<tbl_users>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [Required]
@@ -33,7 +32,7 @@ namespace aspweb.Models
 
         public int? updated_by { get; set; }
 
-        public int? status { get; set; }
+        public byte? status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_users> tbl_users { get; set; }

@@ -8,7 +8,6 @@ namespace aspweb.Models
 
     public partial class tbl_saleorder_products
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         public int saleorder_id { get; set; }
@@ -25,7 +24,7 @@ namespace aspweb.Models
 
         public int? updated_by { get; set; }
 
-        public int? status { get; set; }
+        public byte? status { get; set; }
 
         public virtual tbl_products tbl_products { get; set; }
 

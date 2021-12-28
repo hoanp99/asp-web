@@ -21,11 +21,7 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-group">
-                    <label>Mã danh mục:</label>
-                    @Html.TextBoxFor(model => model.id, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.id, "", new { @class = "text-danger" })
-                </div>
+               
 
                 <div class="form-group">
                     <label>Tên danh mục:</label>

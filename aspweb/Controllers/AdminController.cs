@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using aspweb.Models;
 using PagedList;
+using aspweb.DTO;
 
 namespace aspweb.Controllers
 {
@@ -27,7 +28,7 @@ namespace aspweb.Controllers
             categories = categories.OrderBy(s => s.id);
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            return View(categories.ToPagedList(pageNumber, pageSize));       
+            return View(categories.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult CreateCategory()
@@ -82,7 +83,7 @@ namespace aspweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateCategory([Bind(Include = "id,name,description")] tbl_category category)
+        public ActionResult UpdateCategory([Bind(Include = "id,name,description,created_date,created_by")] tbl_category category)
         {
             DateTime now = DateTime.Now;
             category.updated_date = now;
@@ -97,19 +98,19 @@ namespace aspweb.Controllers
 
         public ActionResult DeleteCategory(string id)
         {
-            if(id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             tbl_category category = db.tbl_category.Find(Int32.Parse(id));
-            if(category == null)
+            if (category == null)
             {
                 return HttpNotFound();
             }
             return View(category);
         }
 
-        [HttpPost, ActionName("DeleteCategories")]
+        [HttpPost, ActionName("DeleteCategory")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCategoryConfirmed(string id)
         {
@@ -121,9 +122,13 @@ namespace aspweb.Controllers
         #endregion
 
         #region Products
-        public ActionResult Products()
+        public ActionResult Products(int? page)
         {
-            return View();
+            var products = db.tbl_products.Select(p => p);
+            products = products.OrderBy(s => s.id);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(products.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult CreateProducts()
@@ -150,25 +155,115 @@ namespace aspweb.Controllers
         #endregion
 
         #region Accounts
-        public ActionResult Accounts()
+        public ActionResult Accounts(int? page)
         {
-            return View();
+            var accounts = from a in db.tbl_users
+                           join b in db.tbl_roles on a.role_id equals b.id
+                           select new Account { roles = b, users = a };
+
+
+
+            accounts = accounts.OrderBy(p => p.users.id);
+            int pageSize = 1;
+            int pageNumber = (page ?? 1);
+            return View(accounts.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult CreateAccount()
         {
+            ViewBag.role_id = new SelectList(db.tbl_roles, "id", "name");
             return View();
         }
 
-        public ActionResult UpdateAccount()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAccount([Bind(Include = "username,password,email,role_id,phone")] tbl_users user)
         {
-            return View();
+            DateTime now = DateTime.Now;
+
+            user.created_date = now;
+            if (ModelState.IsValid)
+            {
+                user.password = PasswordEncode.Encode(user.password);
+                db.tbl_users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Accounts", "Admin");
+            }
+            ViewBag.role_id = new SelectList(db.tbl_roles, "id", "name", user.role_id);
+            return View(user);
         }
 
-        public ActionResult DeleteAccount()
+        public ActionResult UpdateAccount(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.role_id = new SelectList(db.tbl_roles, "id", "name");
+            tbl_users user = db.tbl_users.Find(Int32.Parse(id));
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateAccount([Bind(Include = "id,username,password,email,role_id,phone,created_date,created_by")] tbl_users user)
+        {
+            DateTime now = DateTime.Now;
+            user.updated_date = now;
+            if (ModelState.IsValid)
+            {
+                user.password = PasswordEncode.Encode(user.password);
+                db.Entry(user).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Accounts", "Admin");
+            }
+            ViewBag.role_id = new SelectList(db.tbl_roles, "id", "name", user.role_id);
+            return View(user);
+        }
+
+        public ActionResult DeleteAccount(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_users user = db.tbl_users.Find(Int32.Parse(id));
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
+        [HttpPost, ActionName("DeleteAccount")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteAccountConfirmed(string id)
+        {
+            tbl_users user = db.tbl_users.Find(Int32.Parse(id));
+            db.tbl_users.Remove(user);
+            db.SaveChanges();
+            return RedirectToAction("Accounts", "Admin");
+        }
+
+
+        public ActionResult DetailAccount(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            tbl_users user = db.tbl_users.Find(Int32.Parse(id));
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            return View(user);
+        }
+
         #endregion
     }
 }

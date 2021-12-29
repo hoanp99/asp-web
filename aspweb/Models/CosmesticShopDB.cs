@@ -12,7 +12,6 @@ namespace aspweb.Models
         {
         }
 
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tbl_category> tbl_category { get; set; }
         public virtual DbSet<tbl_products> tbl_products { get; set; }
         public virtual DbSet<tbl_roles> tbl_roles { get; set; }
@@ -23,21 +22,9 @@ namespace aspweb.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<tbl_category>()
-                .Property(e => e.name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<tbl_category>()
-                .Property(e => e.description)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<tbl_category>()
                 .HasMany(e => e.tbl_products)
                 .WithOptional(e => e.tbl_category)
                 .HasForeignKey(e => e.category_id);
-
-            modelBuilder.Entity<tbl_products>()
-                .Property(e => e.title)
-                .IsUnicode(false);
 
             modelBuilder.Entity<tbl_products>()
                 .Property(e => e.price)
@@ -46,14 +33,6 @@ namespace aspweb.Models
             modelBuilder.Entity<tbl_products>()
                 .Property(e => e.price_sale)
                 .HasPrecision(13, 2);
-
-            modelBuilder.Entity<tbl_products>()
-                .Property(e => e.short_description)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<tbl_products>()
-                .Property(e => e.detail_description)
-                .IsUnicode(false);
 
             modelBuilder.Entity<tbl_products>()
                 .Property(e => e.image)

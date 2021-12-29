@@ -70,9 +70,9 @@
                         @Html.DisplayFor(modelItem => item.description)
                     </td>
                     <td>
-                        <input type="button" class="btn btn-danger" value="Chi Tiết" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
-                        | <input type="button" class="btn btn-danger" value="Sửa" onclick="location.href='@Url.Action("UpdateCategory", "Admin", new { id = item.id })'" />
-                        | <input type="button" class="btn btn-danger" value="Xóa" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
+                        <input type="button" class="btn btn-dark" value="Chi Tiết" onclick="location.href='@Url.Action("DetailCategory", "Admin", new { id = item.id })'" />
+                        | <input type="button" class="btn btn-dark" value="Sửa" onclick="location.href='@Url.Action("UpdateCategory", "Admin", new { id = item.id })'" />
+                        | <input type="button" class="btn btn-dark" value="Xóa" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
 
                     </td>
                 </tr>
@@ -81,8 +81,6 @@
 
             </tbody>
         </table>
-        <br />
-        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
         @Html.PagedListPager(Model, page => Url.Action("Categories", "Admin", new { page }))
     </div>
 </div>

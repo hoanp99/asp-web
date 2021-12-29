@@ -1,5 +1,4 @@
-﻿d@model aspweb.Models.tbl_category
-
+﻿@model aspweb.Models.tbl_category
 @{
     ViewBag.Title = "Danh mục";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -25,6 +24,19 @@
 
                 <dt class="col-sm-3">Mô tả:</dt>
                 <dd class="col-sm-9">@Html.DisplayFor(model => model.description)</dd>
+
+                <dt class="col-sm-3">Được tạo vào:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.created_date)</dd>
+
+                <dt class="col-sm-3">Được tạo bởi:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.created_by)</dd>
+
+                <dt class="col-sm-3">Được cập nhật vào:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.updated_date)</dd>
+
+                <dt class="col-sm-3">Được cập nhật bởi:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.updated_by)</dd>
+
 
             </dl>
 

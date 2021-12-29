@@ -136,11 +136,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="DTO\PasswordEncode.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\CosmesticShopDB.cs" />
-    <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\tbl_category.cs" />
     <Compile Include="Models\tbl_products.cs" />
     <Compile Include="Models\tbl_roles.cs" />
@@ -180,15 +183,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="libman.json" />
     <None Include="packages.config" />
-    <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Resources\Admin\css\style.css.map" />
-    <Content Include="Views\Admin\Home.cshtml" />
-    <Content Include="Views\Admin\Categories.cshtml" />
-    <Content Include="Views\Admin\CreateCategory.cshtml" />
-    <Content Include="Views\Admin\DeleteCategory.cshtml" />
-    <Content Include="Views\Admin\UpdateCategory.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
+    <Content Include="Views\Client\ProductGrid.cshtml" />
+    <Content Include="Views\Client\Blog.cshtml" />
+    <Content Include="Views\Client\BlogDetail.cshtml" />
+    <Content Include="Views\Client\Contact.cshtml" />
+    <Content Include="Views\Client\ProductDetail.cshtml" />
     <Content Include="Views\Admin\Accounts.cshtml" />
-    <Content Include="Views\Admin\CreateAcount.cshtml" />
+    <Content Include="Views\Admin\Categories.cshtml" />
+    <Content Include="Views\Admin\CreateAccount.cshtml" />
+    <Content Include="Views\Admin\CreateCategory.cshtml" />
+    <Content Include="Views\Admin\CreateProduct.cshtml" />
+    <Content Include="Views\Admin\DeleteAccount.cshtml" />
+    <Content Include="Views\Admin\DeleteCategory.cshtml" />
+    <Content Include="Views\Admin\DetailAccount.cshtml" />
+    <Content Include="Views\Admin\DetailCategory.cshtml" />
+    <Content Include="Views\Admin\Home.cshtml" />
+    <Content Include="Views\Admin\Products.cshtml" />
+    <Content Include="Views\Admin\UpdateAccount.cshtml" />
+    <Content Include="Views\Admin\UpdateCategory.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

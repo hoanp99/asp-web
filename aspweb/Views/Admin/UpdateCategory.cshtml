@@ -1,14 +1,14 @@
 ﻿@model aspweb.Models.tbl_category
 
 @{
-    ViewBag.Title = "UpdateCategory";
+    ViewBag.Title = "Danh mục";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="row">
     <div class="col-md-12">
         <div class="bg-mattBlackLight my-2 p-3 text-center">
-            <span class="title">Thêm danh mục mới</span>
+            <span class="title">Cập nhật danh mục</span>
         </div>
     </div>
 </div>
@@ -22,6 +22,7 @@
 
                 @Html.HiddenFor(model => model.id)
 
+
                 <div class="form-group">
                     <label>Tên danh mục:</label>
                     @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
@@ -34,7 +35,8 @@
                     @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                 </div>
 
-
+                @Html.HiddenFor(model => model.created_date)
+                @Html.HiddenFor(model => model.created_by)
 
                 <input type="submit" class="btn btn-primary my-2" value="Sửa" />
 

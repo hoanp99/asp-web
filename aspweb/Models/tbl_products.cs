@@ -29,10 +29,14 @@ namespace aspweb.Models
         public string short_description { get; set; }
 
         [Required]
-        [StringLength(6000)]
+        [StringLength(3000)]
         public string detail_description { get; set; }
 
-        [StringLength(200)]
+        public int quantity { get; set; }
+
+        public int quantity_left { get; set; }
+
+        [Column(TypeName = "text")]
         public string image { get; set; }
 
         public int? category_id { get; set; }

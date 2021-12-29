@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<aspweb.Models.tbl_users>
+﻿@model PagedList.IPagedList<aspweb.Models.Account>
 @using PagedList.Mvc;
 
 
@@ -21,7 +21,7 @@
     <div class="col-md-8">
         <div class="bg-mattBlackLight my-2 p-3 text-center d-flex">
             <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Tìm kiếm" style="margin-right: 5px;">
-            <button type="submit" id="btnSearch" name="btnSearch" value="Tìm kiếm" class="btn btn-primary">Seach</button>
+            <button type="submit" id="btnSearch" name="btnSearch" value="Tìm kiếm" class="btn btn-dark">Tìm</button>
         </div>
     </div>
     <div class="col-md-4">
@@ -42,7 +42,10 @@
                         Tên tài khoản
                     </th>
                     <th scope="col">
-                        Mật khẩu
+                        Email
+                    </th>
+                    <th scope="col">
+                        Số điện thoại
                     </th>
                     <th scope="col">
                         Vai trò
@@ -56,39 +59,39 @@
                 }
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td class="align-middle">
-                            @i
-                        </td>
-                        @{
-                            i++;
-                        }
-                        <td class="align-middle">
-                            @Html.DisplayFor(modelItem => item.username)
-                        </td>
-                        <td class="align-middle">
-                            @Html.DisplayFor(modelItem => item.password)
-                        </td>
-                        <td class="align-middle">
-                            @Html.DisplayFor(modelItem => item.role_id)
-                        </td>
-                        <td>
-                            <input type="button" class="btn btn-danger" value="Chi Tiết" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
-                            | <input type="button" class="btn btn-danger" value="Sửa" onclick="location.href='@Url.Action("UpdateCategory", "Admin", new { id = item.id })'" />
-                            | <input type="button" class="btn btn-danger" value="Xóa" onclick="location.href='@Url.Action("DeleteCategory", "Admin", new { id = item.id })'" />
+                <tr>
+                    <td class="align-middle">
+                        @i
+                    </td>
+                    @{
+                        i++;
+                    }
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.users.username)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.users.email)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.users.phone)
+                    </td>
+                    <td class="align-middle">
+                        @Html.DisplayFor(modelItem => item.roles.name)
+                    </td>
+                    <td>
+                        <input type="button" class="btn btn-dark" value="Chi Tiết" onclick="location.href='@Url.Action("DetailAccount", "Admin", new { id = item.users.id })'" />
+                        | <input type="button" class="btn btn-dark" value="Sửa" onclick="location.href='@Url.Action("UpdateAccount", "Admin", new { id = item.users.id })'" />
+                        | <input type="button" class="btn btn-dark" value="Xóa" onclick="location.href='@Url.Action("DeleteAccount", "Admin", new { id = item.users.id })'" />
 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
 
                 }
 
             </tbody>
         </table>
-        <br />
-        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-        @Html.PagedListPager(Model, page => Url.Action("Categories", "Admin", new { page }))
+        @Html.PagedListPager(Model, page => Url.Action("Accounts", "Admin", new { page }))
     </div>
 </div>
-
 
 

@@ -22,6 +22,8 @@ namespace aspweb.Models
         [StringLength(45)]
         public string email { get; set; }
 
+        public int? phone { get; set; }
+
         public DateTime? created_date { get; set; }
 
         public DateTime? updated_date { get; set; }

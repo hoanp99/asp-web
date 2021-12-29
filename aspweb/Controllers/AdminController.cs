@@ -82,7 +82,7 @@ namespace aspweb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateCategory([Bind(Include = "id,name,description")] tbl_category category)
+        public ActionResult UpdateCategory([Bind(Include = "id,name,description,created_date,created_by")] tbl_category category)
         {
             DateTime now = DateTime.Now;
             category.updated_date = now;
@@ -109,7 +109,7 @@ namespace aspweb.Controllers
             return View(category);
         }
 
-        [HttpPost, ActionName("DeleteCategories")]
+        [HttpPost, ActionName("DeleteCategory")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCategoryConfirmed(string id)
         {
@@ -150,14 +150,36 @@ namespace aspweb.Controllers
         #endregion
 
         #region Accounts
-        public ActionResult Accounts()
+        public ActionResult Accounts(int? page)
         {
-            return View();
+            var accounts = db.tbl_users.Select(p => p);
+            accounts = accounts.OrderBy(p => p.id);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(accounts.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult CreateAccount()
         {
+            ViewBag.role_id = new SelectList(db.tbl_roles, "id", "name");
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAccount([Bind(Include = "username,password,email,role_id")] tbl_users user)
+        {
+            DateTime now = DateTime.Now;
+            user.created_date = now;
+            if (ModelState.IsValid)
+            {
+                user.password = user.password + 1;
+                db.tbl_users.Add(user);
+                db.SaveChanges();
+                return RedirectToAction("Accounts", "Admin");
+            }
+            ViewBag.role_id = new SelectList(db.tbl_roles, "id", "name", user.role_id);
+            return View(user);
         }
 
         public ActionResult UpdateAccount()

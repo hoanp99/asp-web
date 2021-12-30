@@ -12,6 +12,7 @@ using aspweb.DTO;
 
 namespace aspweb.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private CosmesticShopDB db = new CosmesticShopDB();
@@ -268,10 +269,6 @@ namespace aspweb.Controllers
 
         public ActionResult DetailSaleOrder(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
             Order order = new Order();
             var saleorder = db.tbl_saleorder.Find(id);
             var orderlist = db.tbl_saleorder_products.Select(p => p).Where(p => p.saleorder_id.Equals(id));

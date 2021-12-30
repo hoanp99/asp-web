@@ -131,26 +131,158 @@ namespace aspweb.Controllers
             return View(products.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult CreateProducts()
+        public ActionResult CreateProduct()
         {
+            ViewBag.category_id = new SelectList(db.tbl_category, "id", "name");
             return View();
         }
 
-        public ActionResult UpdateProducts()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateProduct([Bind(Include = "title,price,price_sale,short_description,detail_description,quantity,image,category_id")] tbl_products product)
         {
-            return View();
+            DateTime now = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                product.quantity_left = product.quantity;
+                product.created_date = now;
+                product.image = "";
+                var f = Request.Files["ImageFile"];
+                if (f != null)
+                {
+                    string FileName = System.IO.Path.GetFileName(f.FileName);
+                    string UploadPath = Server.MapPath("~/Resources/Images/" + FileName);
+                    f.SaveAs(UploadPath);
+                    product.image = FileName;
+                }
+                db.tbl_products.Add(product);
+                db.SaveChanges();
+                return RedirectToAction("Products", "Admin");
+            }
+            ViewBag.category_id = new SelectList(db.tbl_category, "id", "name", product.category_id);
+            return View(product);
         }
 
-        public ActionResult DetailProducts()
+        public ActionResult UpdateProduct(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.category_id = new SelectList(db.tbl_category, "id", "name");
+            tbl_products product = db.tbl_products.Find(Int32.Parse(id));
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateProduct([Bind(Include = "id,title,price,price_sale,short_description,detail_description,quantity,image,category_id,created_date,created_by")] tbl_products product)
+        {
+            DateTime now = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                product.quantity_left = product.quantity;
+                product.updated_date = now;
+                var temp = "";
+                temp = product.image;
+                var f = Request.Files["ImageFile"];
+                if (f != null && f.ContentLength > 0)
+                {
+                    string FileName = System.IO.Path.GetFileName(f.FileName);
+                    string UploadPath = Server.MapPath("~/Resources/Images/" + FileName);
+                    f.SaveAs(UploadPath);
+                    product.image = FileName;           
+                }
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Products", "Admin");
+            }
+            ViewBag.category_id = new SelectList(db.tbl_category, "id", "name", product.category_id);
+            return View(product);
+        }
+
+        public ActionResult DetailProduct(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.category_id = new SelectList(db.tbl_category, "id", "name");
+            tbl_products product = db.tbl_products.Find(Int32.Parse(id));
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        public ActionResult DeleteProduct(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.category_id = new SelectList(db.tbl_category, "id", "name");
+            tbl_products product = db.tbl_products.Find(Int32.Parse(id));
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+            return View(product);
+        }
+
+        [HttpPost, ActionName("DeleteProduct")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteProductConfirmed(string id)
+        {
+            tbl_products product = db.tbl_products.Find(Int32.Parse(id));
+            db.tbl_products.Remove(product);
+            db.SaveChanges();
+            return RedirectToAction("Products", "Admin");
         }
         #endregion
 
         #region SaleOrder
-        public ActionResult SaleOrders()
+        public ActionResult SaleOrders(int? page)
+        {
+            var saleorders = db.tbl_saleorder.Select(p => p);
+            saleorders = saleorders.OrderBy(s => s.id);
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
+            return View(saleorders.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult UpdateSaleOrder()
         {
             return View();
+        }
+
+        public ActionResult DeleteSaleOrder()
+        {
+            return View();
+        }
+
+        public ActionResult DetailSaleOrder(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Order order = new Order();
+            var saleorder = db.tbl_saleorder.Find(id);
+            var orderlist = db.tbl_saleorder_products.Select(p => p).Where(p => p.saleorder_id.Equals(id));
+            order._Saleorder = saleorder;
+            order._Products = orderlist.ToList();
+            if (saleorder == null)
+            {
+                return HttpNotFound();
+            }
+            return View(order);
+            
         }
         #endregion
 

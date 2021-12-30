@@ -23,7 +23,7 @@
     </div>
     <div class="col-md-4">
         <div class="bg-mattBlackLight my-2 p-3 text-center">
-            <a class="btn btn-primary" href="@Url.Action("CreateAccount", "Admin")" role="button">Thêm mới</a>
+            <a class="btn btn-primary" href="@Url.Action("CreateProduct", "Admin")" role="button">Thêm mới</a>
         </div>
     </div>
 </div>
@@ -81,16 +81,19 @@
                     <td class="align-middle">
                         @Html.DisplayFor(modelItem => item.quantity)
                     </td>
-                    <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.image)
+                    <td>
+                        @{ 
+                            string ImagePath = "~/Resources/Images/" + item.image;
+                        }
+                        <img src="@Url.Content(ImagePath)" class="img-thumbnail" width="100" height="100"/>
                     </td>
                     <td class="align-middle">
                         @Html.DisplayFor(modelItem => item.category_id)
                     </td>
                     <td>
-                        <input type="button" class="btn btn-dark" value="Chi Tiết" onclick="location.href='@Url.Action("DetailAccount", "Admin", new { id = item.id })'" />
-                        | <input type="button" class="btn btn-dark" value="Sửa" onclick="location.href='@Url.Action("UpdateAccount", "Admin", new { id = item.id })'" />
-                        | <input type="button" class="btn btn-dark" value="Xóa" onclick="location.href='@Url.Action("DeleteAccount", "Admin", new { id = item.id })'" />
+                        <input type="button" class="btn btn-dark" value="Chi Tiết" onclick="location.href='@Url.Action("DetailProduct", "Admin", new { id = item.id })'" />
+                        | <input type="button" class="btn btn-dark" value="Sửa" onclick="location.href='@Url.Action("UpdateProduct", "Admin", new { id = item.id })'" />
+                        | <input type="button" class="btn btn-dark" value="Xóa" onclick="location.href='@Url.Action("DeleteProduct", "Admin", new { id = item.id })'" />
 
                     </td>
                 </tr>

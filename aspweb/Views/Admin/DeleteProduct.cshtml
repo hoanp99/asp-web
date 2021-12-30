@@ -1,0 +1,71 @@
+﻿@model aspweb.Models.tbl_products
+
+@{
+    ViewBag.Title = "DeleteProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="bg-mattBlackLight my-2 p-3 text-center">
+            <span class="title">Chắc chắn xóa sản phẩm này?</span>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="bg-mattBlackLight my-2 p-3">
+            <dl class="row">
+                <dt class="col-sm-3">Mã sản phẩm:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.id)</dd>
+
+                <dt class="col-sm-3">Tên sản phẩm:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.title)</dd>
+
+                <dt class="col-sm-3">Giá:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.price)</dd>
+
+                <dt class="col-sm-3">Giá khuyến mãi:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.price_sale)</dd>
+
+                <dt class="col-sm-3">Số lượng nhập:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.quantity)</dd>
+
+                <dt class="col-sm-3">Số lượng còn:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.quantity_left)</dd>
+
+                <dt class="col-sm-3">Mô tả:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.short_description)</dd>
+
+                <dt class="col-sm-3">Thông tin chi tiết:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.detail_description)</dd>
+
+                <dt class="col-sm-3">Danh mục:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.tbl_category.name)</dd>
+
+                <dt class="col-sm-3">Được tạo vào:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.created_date)</dd>
+
+                <dt class="col-sm-3">Được tạo bởi:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.created_by)</dd>
+
+                <dt class="col-sm-3">Được cập nhật vào:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.updated_date)</dd>
+
+                <dt class="col-sm-3">Được cập nhật bởi:</dt>
+                <dd class="col-sm-9">@Html.DisplayFor(model => model.updated_by)</dd>
+
+
+            </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <input type="submit" value="Xóa" class="btn btn-danger" />
+            }
+        </div>
+    </div>
+</div>
+

@@ -144,6 +144,7 @@
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\CosmesticShopDB.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\tbl_category.cs" />
     <Compile Include="Models\tbl_products.cs" />
     <Compile Include="Models\tbl_roles.cs" />
@@ -158,7 +159,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Resources\Admin\css\style.css" />
+    <Content Include="Resources\Admin\css\summernote-bs4.min.css" />
     <Content Include="Resources\Admin\js\script.js" />
+    <Content Include="Resources\Admin\js\summernote-bs4.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -183,7 +186,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="libman.json" />
     <None Include="packages.config" />
-    <Content Include="Resources\Admin\css\style.css.map" />
     <Content Include="Views\Client\Index.cshtml" />
     <Content Include="Views\Client\ProductGrid.cshtml" />
     <Content Include="Views\Client\Blog.cshtml" />
@@ -204,6 +206,12 @@
     <Content Include="Views\Admin\UpdateAccount.cshtml" />
     <Content Include="Views\Admin\UpdateCategory.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Resources\Admin\css\style.css.map" />
+    <Content Include="Views\Admin\UpdateProduct.cshtml" />
+    <Content Include="Views\Admin\DeleteProduct.cshtml" />
+    <Content Include="Views\Admin\DetailProduct.cshtml" />
+    <Content Include="Views\Admin\SaleOrders.cshtml" />
+    <Content Include="Views\Admin\DetailSaleOrder.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

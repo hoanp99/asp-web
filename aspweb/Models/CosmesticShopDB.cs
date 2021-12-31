@@ -22,6 +22,14 @@ namespace aspweb.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<tbl_category>()
+                .Property(e => e.created_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_category>()
+                .Property(e => e.updated_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_category>()
                 .HasMany(e => e.tbl_products)
                 .WithOptional(e => e.tbl_category)
                 .HasForeignKey(e => e.category_id);
@@ -39,6 +47,14 @@ namespace aspweb.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_products>()
+                .Property(e => e.created_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_products>()
+                .Property(e => e.updated_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_products>()
                 .HasMany(e => e.tbl_saleorder_products)
                 .WithRequired(e => e.tbl_products)
                 .HasForeignKey(e => e.product_id)
@@ -46,6 +62,14 @@ namespace aspweb.Models
 
             modelBuilder.Entity<tbl_roles>()
                 .Property(e => e.name)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_roles>()
+                .Property(e => e.created_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_roles>()
+                .Property(e => e.updated_by)
                 .IsUnicode(false);
 
             modelBuilder.Entity<tbl_roles>()
@@ -61,6 +85,14 @@ namespace aspweb.Models
             modelBuilder.Entity<tbl_saleorder>()
                 .Property(e => e.total)
                 .HasPrecision(13, 2);
+
+            modelBuilder.Entity<tbl_saleorder>()
+                .Property(e => e.created_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_saleorder>()
+                .Property(e => e.updated_by)
+                .IsUnicode(false);
 
             modelBuilder.Entity<tbl_saleorder>()
                 .Property(e => e.customer_name)
@@ -84,6 +116,14 @@ namespace aspweb.Models
                 .HasForeignKey(e => e.saleorder_id)
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<tbl_saleorder_products>()
+                .Property(e => e.created_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_saleorder_products>()
+                .Property(e => e.updated_by)
+                .IsUnicode(false);
+
             modelBuilder.Entity<tbl_users>()
                 .Property(e => e.username)
                 .IsUnicode(false);
@@ -94,6 +134,14 @@ namespace aspweb.Models
 
             modelBuilder.Entity<tbl_users>()
                 .Property(e => e.email)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_users>()
+                .Property(e => e.created_by)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_users>()
+                .Property(e => e.updated_by)
                 .IsUnicode(false);
         }
     }

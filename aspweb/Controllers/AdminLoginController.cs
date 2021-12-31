@@ -17,6 +17,10 @@ namespace aspweb.Controllers
         // GET: AdminLogin
         public ActionResult Index()
         {
+            if (System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Home","Admin");
+            }
             return View();
         }
 
@@ -27,7 +31,7 @@ namespace aspweb.Controllers
             using (var db = new CosmesticShopDB())
             {
                 model.password = PasswordEncode.Encode(model.password);
-                bool isValid = db.tbl_users.Any(x => x.username == model.username && x.password == model.password);
+                bool isValid = db.tbl_users.Any(x => x.username == model.username && x.password == model.password && x.tbl_roles.name == "admin");
                 if (isValid)
                 {
                     FormsAuthentication.SetAuthCookie(model.username, false);

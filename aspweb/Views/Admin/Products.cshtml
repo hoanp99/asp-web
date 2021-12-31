@@ -88,7 +88,7 @@
                         <img src="@Url.Content(ImagePath)" class="img-thumbnail" width="100" height="100"/>
                     </td>
                     <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.category_id)
+                        @Html.DisplayFor(modelItem => item.tbl_category.name)
                     </td>
                     <td>
                         <input type="button" class="btn btn-dark" value="Chi Tiết" onclick="location.href='@Url.Action("DetailProduct", "Admin", new { id = item.id })'" />

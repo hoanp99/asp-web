@@ -50,5 +50,7 @@ namespace aspweb.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_saleorder_products> tbl_saleorder_products { get; set; }
+
+        public virtual tbl_users tbl_users { get; set; }
     }
 }

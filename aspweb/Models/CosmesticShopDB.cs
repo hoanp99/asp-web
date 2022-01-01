@@ -143,6 +143,11 @@ namespace aspweb.Models
             modelBuilder.Entity<tbl_users>()
                 .Property(e => e.updated_by)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<tbl_users>()
+                .HasMany(e => e.tbl_saleorder)
+                .WithOptional(e => e.tbl_users)
+                .HasForeignKey(e => e.user_id);
         }
     }
 }

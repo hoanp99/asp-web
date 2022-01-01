@@ -17,8 +17,12 @@
 <div class="row">
     <div class="col-md-8">
         <div class="bg-mattBlackLight my-2 p-3 text-center d-flex">
-            <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Tìm kiếm" style="margin-right: 5px;">
-            <button type="submit" id="btnSearch" name="btnSearch" value="Tìm kiếm" class="btn btn-primary">Seach</button>
+            @using (Html.BeginForm("Categories","Admin",FormMethod.Post,new { @class = "form-inline" }))
+            {
+                <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Tên danh mục" style="margin-right: 5px">
+                <button type="submit" id="btnSearch" name="btnSearch" value="Tìm kiếm" class="btn btn-primary">Tìm kiếm</button>
+            }
+
         </div>
     </div>
     <div class="col-md-4">

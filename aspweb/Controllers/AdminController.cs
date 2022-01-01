@@ -12,7 +12,7 @@ using aspweb.DTO;
 
 namespace aspweb.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         private CosmesticShopDB db = new CosmesticShopDB();
@@ -27,11 +27,16 @@ namespace aspweb.Controllers
         }
 
         #region Categories
-        public ActionResult Categories(int? page)
+        public ActionResult Categories(int? page, string keyword)
         {
+            
             var categories = db.tbl_category.Select(p => p);
+            if (Request.HttpMethod == "POST")
+            {
+                categories = categories.Where(x => x.name.Contains(keyword));
+            }
             categories = categories.OrderBy(s => s.id);
-            int pageSize = 10;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(categories.ToPagedList(pageNumber, pageSize));
         }
@@ -129,14 +134,28 @@ namespace aspweb.Controllers
         #endregion
 
         #region Products
-        public ActionResult Products(int? page)
+        public ActionResult Products(int? page, string keyword, string category)
         {
             ViewBag.username = userName;
-            var products = db.tbl_products.Select(p => p);
-            products = products.OrderBy(s => s.id);
-            int pageSize = 10;
-            int pageNumber = (page ?? 1);
+            ViewBag.category = new SelectList(db.tbl_category, "id", "name");
+            var products = db.tbl_products.Select(p => p);     
             
+            if (Request.HttpMethod == "POST")
+            {            
+                if(!String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(category))
+                {
+                    int id = Int32.Parse(category);
+                    products = products.Where(p => p.title.Contains(keyword) && p.category_id == id);
+                }
+                else if(String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(category))
+                {
+                    int id = Int32.Parse(category);
+                    products = products.Where(p => p.category_id == id);
+                }
+            }
+            products = products.OrderBy(s => s.id);
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);          
             return View(products.ToPagedList(pageNumber, pageSize));
         }
 
@@ -268,15 +287,40 @@ namespace aspweb.Controllers
         {
             ViewBag.username = userName;
             var saleorders = db.tbl_saleorder.Select(p => p);
+
+
             saleorders = saleorders.OrderBy(s => s.id);
-            int pageSize = 10;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(saleorders.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult UpdateSaleOrder()
+        public ActionResult UpdateSaleOrder(int id)
         {
-            return View();
+            ViewBag.username = userName;
+            var saleorder = db.tbl_saleorder.Find(id);
+            if (saleorder == null)
+            {
+                return HttpNotFound();
+            }
+            return View(saleorder);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateSaleOrder([Bind(Include = "id,code,user_id,total,customer_name,customer_address,customer_phone,cutomer_email,status,created_date,created_by")] tbl_saleorder saleorder)
+        {
+            ViewBag.username = userName;
+            DateTime now = DateTime.Now;
+            saleorder.updated_date = now;
+            saleorder.updated_by = userName;
+            if (ModelState.IsValid)
+            {
+                db.Entry(saleorder).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("SaleOrders", "Admin");
+            }
+            return View(saleorder);
         }
 
         public ActionResult DeleteSaleOrder(int id)
@@ -328,17 +372,26 @@ namespace aspweb.Controllers
         #endregion
 
         #region Accounts
-        public ActionResult Accounts(int? page)
+        public ActionResult Accounts(int? page, string keyword, string roles)
         {
             ViewBag.username = userName;
             var accounts = from a in db.tbl_users
                            join b in db.tbl_roles on a.role_id equals b.id
                            select new Account { roles = b, users = a };
-
-
-
+            if(Request.HttpMethod == "POST")
+            {
+                int id = Int32.Parse(roles);
+                if(String.IsNullOrEmpty(keyword) && id != 0)
+                {
+                    accounts = accounts.Where(p => p.roles.id == id);
+                }
+                else if (!String.IsNullOrEmpty(keyword) && id != 0)
+                {
+                    accounts = accounts.Where(p => p.users.username.Contains(keyword) && p.roles.id == id);
+                }
+            }
             accounts = accounts.OrderBy(p => p.users.id);
-            int pageSize = 1;
+            int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(accounts.ToPagedList(pageNumber, pageSize));
         }

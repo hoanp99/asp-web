@@ -18,7 +18,9 @@
         <div class="bg-mattBlackLight my-2 p-3">
             @using (Html.BeginForm())
             {
-                @Html.AntiForgeryToken()              
+                @Html.AntiForgeryToken()
+
+                @Html.HiddenFor(model=>model.id)
 
                 @Html.HiddenFor(model => model.username)
                 <div class="form-group">
@@ -41,7 +43,7 @@
 
                 <div class="form-group">
                     <label>Số điện thoại:</label>
-                    @Html.TextBoxFor(model => model.phone, new { @class = "form-control"})
+                    @Html.TextBoxFor(model => model.phone, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger" })
                 </div>
 
@@ -50,6 +52,9 @@
                     @Html.DropDownList("role_id", null, htmlAttributes: new { @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(model => model.role_id, "", new { @class = "text-danger" })
                 </div>
+
+                @Html.HiddenFor(model => model.created_by)
+                @Html.HiddenFor(model => model.created_date)
 
 
 

@@ -17,12 +17,8 @@
 <div class="row">
     <div class="col-md-8">
         <div class="bg-mattBlackLight my-2 p-3 text-center d-flex">
-            @using (Html.BeginForm("Products", "Admin", FormMethod.Post, new { @class = "form-inline" }))
-            {
-                <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Tên sản phẩm" style="margin-right: 5px">
-                @Html.DropDownList("category", null, "Tất cả", new { @class = "form-control", style = "margin-right: 5px" })
-                <button type="submit" id="btnSearch" name="btnSearch" class="btn btn-primary">Tìm kiếm</button>
-            }
+            <input type="text" id="keyword" name="keyword" class="form-control" placeholder="Tìm kiếm" style="margin-right: 5px;">
+            <button type="submit" id="btnSearch" name="btnSearch" value="Tìm kiếm" class="btn btn-dark">Tìm</button>
         </div>
     </div>
     <div class="col-md-4">
@@ -92,7 +88,7 @@
                         <img src="@Url.Content(ImagePath)" class="img-thumbnail" width="100" height="100"/>
                     </td>
                     <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.tbl_category.name)
+                        @Html.DisplayFor(modelItem => item.category_id)
                     </td>
                     <td>
                         <input type="button" class="btn btn-dark" value="Chi Tiết" onclick="location.href='@Url.Action("DetailProduct", "Admin", new { id = item.id })'" />

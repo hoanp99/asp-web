@@ -28,11 +28,9 @@ namespace aspweb.Models
 
         public DateTime? updated_date { get; set; }
 
-        [StringLength(50)]
-        public string created_by { get; set; }
+        public int? created_by { get; set; }
 
-        [StringLength(50)]
-        public string updated_by { get; set; }
+        public int? updated_by { get; set; }
 
         public byte? status { get; set; }
 
@@ -50,7 +48,5 @@ namespace aspweb.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_saleorder_products> tbl_saleorder_products { get; set; }
-
-        public virtual tbl_users tbl_users { get; set; }
     }
 }

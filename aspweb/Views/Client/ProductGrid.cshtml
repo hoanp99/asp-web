@@ -1,4 +1,6 @@
 ﻿@model aspweb.Models.Entity
+@using PagedList.Mvc;
+
 @{
     Layout = null;
 }
@@ -32,7 +34,7 @@
     <link rel="stylesheet" href="~/Resources/Client/css/responsive.css">
     <!-- User style -->
     <link rel="stylesheet" href="~/Resources/Client/css/custom.css">
-
+    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 
     <!-- Modernizr JS -->
     <script src="~/Resources/Client/js/vendor/modernizr-3.5.0.min.js"></script>
@@ -43,7 +45,7 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- Body main wrapper start -->
-    
+
     <div class="wrapper">
         <!-- Start Header Style -->
         <header id="htc__header" class="htc__header__area header--one">
@@ -111,7 +113,7 @@
                                         <a href="#"><i class="icon-user icons"></i></a>
                                     </div>
                                     <div class="htc__shopping__cart">
-                                        <a class="cart__menu" href="#"><i class="icon-handbag icons"></i></a>
+                                        <a class="cart__menu" href="@Url.Action("Cart", "Client")"><img src="~/Resources/Images/cart.png"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -254,6 +256,10 @@
                                             </div>
                                         }
                                         <!-- End Single Product -->
+                                        @Html.PagedListPager(Model._Products, page => Url.Action("ProductGrid", new
+                                        {
+                                            page                                           
+                                        }))
 
                                     </div>
                                     <div role="tabpanel" id="list-view" class="single-grid-view tab-pane fade clearfix">
@@ -397,11 +403,12 @@
                             <div class="htc__category">
                                 <h4 class="title__line--4">Loại</h4>
                                 <ul class="ht__cat__list">
-                                    @foreach(var category in Model._Categories) {
+                                    @foreach (var category in Model._Categories)
+                                    {
 
                                         <li><a href="#">@category.name</a></li>
                                     }
-                                    
+
                                 </ul>
                             </div>
                             <!-- End Category Area -->

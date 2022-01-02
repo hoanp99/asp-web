@@ -16,27 +16,18 @@ namespace aspweb.Controllers
     public class AdminController : Controller
     {
         private CosmesticShopDB db = new CosmesticShopDB();
-        private string userName = System.Web.HttpContext.Current.User.Identity.Name;
-        
         // GET: Admin
         public ActionResult Home()
         {
-            ViewBag.username = userName;
-            var products = db.tbl_products.Select(x => x).OrderByDescending(x => x.quantity - x.quantity_left).Take(3);
-            return View(products.ToList());
+            return View();
         }
 
         #region Categories
-        public ActionResult Categories(int? page, string keyword)
+        public ActionResult Categories(int? page)
         {
-            
             var categories = db.tbl_category.Select(p => p);
-            if (Request.HttpMethod == "POST")
-            {
-                categories = categories.Where(x => x.name.Contains(keyword));
-            }
             categories = categories.OrderBy(s => s.id);
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(categories.ToPagedList(pageNumber, pageSize));
         }
@@ -52,7 +43,6 @@ namespace aspweb.Controllers
         {
             DateTime now = DateTime.Now;
             category.created_date = now;
-            category.created_by = userName;
             if (ModelState.IsValid)
             {
                 db.tbl_category.Add(category);
@@ -98,7 +88,6 @@ namespace aspweb.Controllers
         {
             DateTime now = DateTime.Now;
             category.updated_date = now;
-            category.updated_by = userName;
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;
@@ -134,34 +123,17 @@ namespace aspweb.Controllers
         #endregion
 
         #region Products
-        public ActionResult Products(int? page, string keyword, string category)
+        public ActionResult Products(int? page)
         {
-            ViewBag.username = userName;
-            ViewBag.category = new SelectList(db.tbl_category, "id", "name");
-            var products = db.tbl_products.Select(p => p);     
-            
-            if (Request.HttpMethod == "POST")
-            {            
-                if(!String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(category))
-                {
-                    int id = Int32.Parse(category);
-                    products = products.Where(p => p.title.Contains(keyword) && p.category_id == id);
-                }
-                else if(String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(category))
-                {
-                    int id = Int32.Parse(category);
-                    products = products.Where(p => p.category_id == id);
-                }
-            }
+            var products = db.tbl_products.Select(p => p);
             products = products.OrderBy(s => s.id);
-            int pageSize = 5;
-            int pageNumber = (page ?? 1);          
+            int pageSize = 10;
+            int pageNumber = (page ?? 1);
             return View(products.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult CreateProduct()
         {
-            ViewBag.username = userName;
             ViewBag.category_id = new SelectList(db.tbl_category, "id", "name");
             return View();
         }
@@ -170,17 +142,14 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateProduct([Bind(Include = "title,price,price_sale,short_description,detail_description,quantity,image,category_id")] tbl_products product)
         {
-            ViewBag.username = userName;
             DateTime now = DateTime.Now;
-            product.created_date = now;
-            product.created_by = userName;
             if (ModelState.IsValid)
             {
                 product.quantity_left = product.quantity;
-                
+                product.created_date = now;
                 product.image = "";
                 var f = Request.Files["ImageFile"];
-                if (f != null && f.ContentLength > 0)
+                if (f != null)
                 {
                     string FileName = System.IO.Path.GetFileName(f.FileName);
                     string UploadPath = Server.MapPath("~/Resources/Images/" + FileName);
@@ -197,7 +166,6 @@ namespace aspweb.Controllers
 
         public ActionResult UpdateProduct(string id)
         {
-            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -215,13 +183,13 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateProduct([Bind(Include = "id,title,price,price_sale,short_description,detail_description,quantity,image,category_id,created_date,created_by")] tbl_products product)
         {
-            ViewBag.username = userName;
             DateTime now = DateTime.Now;
-            product.updated_date = now;
-            product.updated_by = userName;
             if (ModelState.IsValid)
             {
                 product.quantity_left = product.quantity;
+                product.updated_date = now;
+                var temp = "";
+                temp = product.image;
                 var f = Request.Files["ImageFile"];
                 if (f != null && f.ContentLength > 0)
                 {
@@ -240,7 +208,6 @@ namespace aspweb.Controllers
 
         public ActionResult DetailProduct(string id)
         {
-            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -256,7 +223,6 @@ namespace aspweb.Controllers
 
         public ActionResult DeleteProduct(string id)
         {
-            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -274,7 +240,6 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteProductConfirmed(string id)
         {
-            ViewBag.username = userName;
             tbl_products product = db.tbl_products.Find(Int32.Parse(id));
             db.tbl_products.Remove(product);
             db.SaveChanges();
@@ -283,92 +248,27 @@ namespace aspweb.Controllers
         #endregion
 
         #region SaleOrder
-        public ActionResult SaleOrders(int? page, string keyword, string status)
+        public ActionResult SaleOrders(int? page)
         {
-            ViewBag.username = userName;
             var saleorders = db.tbl_saleorder.Select(p => p);
-            if(Request.HttpMethod == "POST")
-            {
-                if(!String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(status))
-                {
-                    int id = Int32.Parse(status);
-                    saleorders = saleorders.Where(p => p.code.Contains(keyword) && p.status == id);
-                }
-                else if(String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(status))
-                {
-                    int id = Int32.Parse(status);
-                    saleorders = saleorders.Where(p => p.status == id);
-                }
-            }
-
             saleorders = saleorders.OrderBy(s => s.id);
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(saleorders.ToPagedList(pageNumber, pageSize));
         }
 
-        public ActionResult UpdateSaleOrder(int id)
+        public ActionResult UpdateSaleOrder()
         {
-            ViewBag.username = userName;
-            var saleorder = db.tbl_saleorder.Find(id);
-            if (saleorder == null)
-            {
-                return HttpNotFound();
-            }
-            return View(saleorder);
+            return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult UpdateSaleOrder([Bind(Include = "id,code,user_id,total,customer_name,customer_address,customer_phone,cutomer_email,status,created_date,created_by")] tbl_saleorder saleorder)
+        public ActionResult DeleteSaleOrder()
         {
-            ViewBag.username = userName;
-            DateTime now = DateTime.Now;
-            saleorder.updated_date = now;
-            saleorder.updated_by = userName;
-            if (ModelState.IsValid)
-            {
-                db.Entry(saleorder).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("SaleOrders", "Admin");
-            }
-            return View(saleorder);
-        }
-
-        public ActionResult DeleteSaleOrder(int id)
-        {
-            ViewBag.username = userName;
-            Order order = new Order();
-            var saleorder = db.tbl_saleorder.Find(id);
-            var orderlist = db.tbl_saleorder_products.Select(p => p).Where(p => p.saleorder_id.Equals(id));
-            order._Saleorder = saleorder;
-            order._Products = orderlist.ToList();
-            if (saleorder == null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
-        }
-
-        [HttpPost, ActionName("DeleteSaleOrder")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteSaleOrderConfirmed(int id)
-        {
-            ViewBag.username = userName;
-            var saleorder = db.tbl_saleorder.Find(id);
-            IEnumerable<tbl_saleorder_products> orderlist = db.tbl_saleorder_products.Select(p => p).Where(p => p.saleorder_id.Equals(id));
-            if(orderlist != null)
-            {
-                db.tbl_saleorder_products.RemoveRange(orderlist);
-            }        
-            db.tbl_saleorder.Remove(saleorder);
-            db.SaveChanges();
-            return RedirectToAction("SaleOrders", "Admin");
+            return View();
         }
 
         public ActionResult DetailSaleOrder(int id)
         {
-            ViewBag.username = userName;
             Order order = new Order();
             var saleorder = db.tbl_saleorder.Find(id);
             var orderlist = db.tbl_saleorder_products.Select(p => p).Where(p => p.saleorder_id.Equals(id));
@@ -384,33 +284,22 @@ namespace aspweb.Controllers
         #endregion
 
         #region Accounts
-        public ActionResult Accounts(int? page, string keyword, string roles)
+        public ActionResult Accounts(int? page)
         {
-            ViewBag.username = userName;
             var accounts = from a in db.tbl_users
                            join b in db.tbl_roles on a.role_id equals b.id
                            select new Account { roles = b, users = a };
-            if(Request.HttpMethod == "POST")
-            {
-                int id = Int32.Parse(roles);
-                if(String.IsNullOrEmpty(keyword) && id != 0)
-                {
-                    accounts = accounts.Where(p => p.roles.id == id);
-                }
-                else if (!String.IsNullOrEmpty(keyword) && id != 0)
-                {
-                    accounts = accounts.Where(p => p.users.username.Contains(keyword) && p.roles.id == id);
-                }
-            }
+
+
+
             accounts = accounts.OrderBy(p => p.users.id);
-            int pageSize = 5;
+            int pageSize = 1;
             int pageNumber = (page ?? 1);
             return View(accounts.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult CreateAccount()
         {
-            ViewBag.username = userName;
             ViewBag.role_id = new SelectList(db.tbl_roles, "id", "name");
             return View();
         }
@@ -419,9 +308,8 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateAccount([Bind(Include = "username,password,email,role_id,phone")] tbl_users user)
         {
-            ViewBag.username = userName;
             DateTime now = DateTime.Now;
-            user.created_by = userName;
+
             user.created_date = now;
             if (ModelState.IsValid)
             {
@@ -436,7 +324,6 @@ namespace aspweb.Controllers
 
         public ActionResult UpdateAccount(string id)
         {
-            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -454,10 +341,8 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateAccount([Bind(Include = "id,username,password,email,role_id,phone,created_date,created_by")] tbl_users user)
         {
-            ViewBag.username = userName;
             DateTime now = DateTime.Now;
             user.updated_date = now;
-            user.updated_by = userName;
             if (ModelState.IsValid)
             {
                 user.password = PasswordEncode.Encode(user.password);
@@ -471,7 +356,6 @@ namespace aspweb.Controllers
 
         public ActionResult DeleteAccount(string id)
         {
-            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -488,7 +372,6 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteAccountConfirmed(string id)
         {
-            ViewBag.username = userName;
             tbl_users user = db.tbl_users.Find(Int32.Parse(id));
             db.tbl_users.Remove(user);
             db.SaveChanges();
@@ -498,7 +381,6 @@ namespace aspweb.Controllers
 
         public ActionResult DetailAccount(string id)
         {
-            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

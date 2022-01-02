@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using aspweb.Models;
+using PagedList;
 
 namespace aspweb.Controllers
 {
@@ -16,13 +17,19 @@ namespace aspweb.Controllers
             var new_products = db.tbl_products.OrderByDescending(a => a.price).Take(4).ToList();
             return View(new_products);
         }
-        public ActionResult ProductGrid()
+        public ActionResult ProductGrid(int? page)
         {
-            var all_product = db.tbl_products.Select(p => p).ToList();
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+            var all_product = db.tbl_products.Select(p => p)
+                .OrderBy(p => p.id)
+                .ToPagedList(pageNumber, pageSize);
             var all_category = db.tbl_category.Select(p => p).ToList();
             Entity entity = new Entity();
+            
             entity._Products = all_product;
             entity._Categories = all_category;
+            
             return View(entity);
         }
         public ActionResult Blog()
@@ -34,6 +41,10 @@ namespace aspweb.Controllers
             return View();
         }
         public ActionResult Contact()
+        {
+            return View();
+        }
+        public ActionResult Cart()
         {
             return View();
         }

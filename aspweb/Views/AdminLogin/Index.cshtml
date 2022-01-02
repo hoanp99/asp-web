@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Admin Login</title>
+    <title>Login V14</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--===============================================================================================-->
@@ -40,21 +40,21 @@
                 @using (Html.BeginForm("Index", "AdminLogin", FormMethod.Post, new { @class = "login100-form validate-form flex-sb flex-w" }))
                 {
                     <span class="login100-form-title p-b-32">
-                        Đăng nhập
+                        Account Login
                     </span>
 
                     <span class="txt1 p-b-11">
-                        Tên tài khoản
+                        Username
                     </span>
-                    <div class="wrap-input100 validate-input m-b-36" data-validate="Tên tài khoản không được trống">
+                    <div class="wrap-input100 validate-input m-b-36" data-validate="Username is required">
                         @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "input100", name = "username" } })
                         <span class="focus-input100"></span>
                     </div>
 
                     <span class="txt1 p-b-11">
-                        Mật khẩu
+                        Password
                     </span>
-                    <div class="wrap-input100 validate-input m-b-12" data-validate="Mật khẩu không được trống">
+                    <div class="wrap-input100 validate-input m-b-12" data-validate="Password is required">
                         <span class="btn-show-pass">
                             <i class="fa fa-eye"></i>
                         </span>
@@ -66,13 +66,13 @@
                         <div class="contact100-form-checkbox">
                             <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
                             <label class="label-checkbox100" for="ckb1">
-                                Nhớ mật khẩu
+                                Remember me
                             </label>
                         </div>
 
                         <div>
                             <a href="#" class="txt3">
-                                Quên mật khẩu?
+                                Forgot Password?
                             </a>
                         </div>
                     </div>
@@ -81,21 +81,10 @@
 
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" type="submit">
-                            Đăng nhập
+                            Login
                         </button>
                     </div>
                 }
-
-            <div style="margin-top: 40px; color: red">
-                @{ 
-                    var error = "";
-                }
-                @if(ViewBag.Error != null)
-                {
-                    error = ViewBag.Error;
-                }
-                 @ViewBag.Error
-            </div>
             </div>
         </div>
     </div>

@@ -8,12 +8,6 @@ namespace aspweb.Models
 
     public partial class tbl_users
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tbl_users()
-        {
-            tbl_saleorder = new HashSet<tbl_saleorder>();
-        }
-
         public int id { get; set; }
 
         [Required]
@@ -34,19 +28,14 @@ namespace aspweb.Models
 
         public DateTime? updated_date { get; set; }
 
-        [StringLength(50)]
-        public string created_by { get; set; }
+        public int? created_by { get; set; }
 
-        [StringLength(50)]
-        public string updated_by { get; set; }
+        public int? updated_by { get; set; }
 
         public byte? status { get; set; }
 
         public int role_id { get; set; }
 
         public virtual tbl_roles tbl_roles { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_saleorder> tbl_saleorder { get; set; }
     }
 }

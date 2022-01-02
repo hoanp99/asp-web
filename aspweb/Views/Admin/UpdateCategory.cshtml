@@ -25,13 +25,13 @@
 
                 <div class="form-group">
                     <label>Tên danh mục:</label>
-                    @Html.TextBoxFor(model => model.name, new { @class = "form-control" })
+                    @Html.TextBoxFor(model => model.name, new { @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                 </div>
 
                 <div class="form-group">
                     <label>Mô tả:</label>
-                    @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+                    @Html.TextAreaFor(model => model.description, new { @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                 </div>
 

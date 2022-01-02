@@ -12,7 +12,7 @@ using aspweb.DTO;
 
 namespace aspweb.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class AdminController : Controller
     {
         private CosmesticShopDB db = new CosmesticShopDB();
@@ -283,11 +283,23 @@ namespace aspweb.Controllers
         #endregion
 
         #region SaleOrder
-        public ActionResult SaleOrders(int? page)
+        public ActionResult SaleOrders(int? page, string keyword, string status)
         {
             ViewBag.username = userName;
             var saleorders = db.tbl_saleorder.Select(p => p);
-
+            if(Request.HttpMethod == "POST")
+            {
+                if(!String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(status))
+                {
+                    int id = Int32.Parse(status);
+                    saleorders = saleorders.Where(p => p.code.Contains(keyword) && p.status == id);
+                }
+                else if(String.IsNullOrEmpty(keyword) && !String.IsNullOrEmpty(status))
+                {
+                    int id = Int32.Parse(status);
+                    saleorders = saleorders.Where(p => p.status == id);
+                }
+            }
 
             saleorders = saleorders.OrderBy(s => s.id);
             int pageSize = 5;

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-4 my-3">
         <div class="bg-mattBlackLight px-3 py-3">
             <h4 class="mb-2">New Clients</h4>
@@ -38,7 +38,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 <div class="row">
     <div class="col-md-12">
         <div class="bg-mattBlackLight my-2 p-3 text-center">
@@ -64,7 +64,7 @@
                         Giá khuyến mãi
                     </th>
                     <th scope="col">
-                        Số lượng
+                        Đã bán được
                     </th>
                     <th scope="col">
                         Hình ảnh
@@ -97,7 +97,10 @@
                             @Html.DisplayFor(modelItem => item.price_sale)
                         </td>
                         <td class="align-middle">
-                            @Html.DisplayFor(modelItem => item.quantity)
+                            @{ 
+                                var number = item.quantity - item.quantity_left;
+                            }
+                            @number
                         </td>
                         <td>
                             @{

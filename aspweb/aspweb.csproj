@@ -137,7 +137,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminLoginController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\ClientLoginController.cs" />
+    <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\UserRoleProvider.cs" />
     <Compile Include="DTO\GenerateSaleOrderCode.cs" />
     <Compile Include="DTO\PasswordEncode.cs" />
     <Compile Include="Global.asax.cs">
@@ -145,7 +150,6 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\CosmesticShopDB.cs" />
-    <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\tbl_category.cs" />
     <Compile Include="Models\tbl_products.cs" />
@@ -379,12 +383,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="libman.json" />
     <None Include="packages.config" />
-    <Content Include="Views\Client\Index.cshtml" />
-    <Content Include="Views\Client\ProductGrid.cshtml" />
-    <Content Include="Views\Client\Blog.cshtml" />
-    <Content Include="Views\Client\BlogDetail.cshtml" />
-    <Content Include="Views\Client\Contact.cshtml" />
-    <Content Include="Views\Client\ProductDetail.cshtml" />
     <Content Include="Views\Admin\Accounts.cshtml" />
     <Content Include="Views\Admin\Categories.cshtml" />
     <Content Include="Views\Admin\CreateAccount.cshtml" />
@@ -543,6 +541,17 @@
     <Content Include="Resources\Client\images\product-2\sm-smg\Thumbs.db" />
     <Content Include="Resources\Client\images\product\Thumbs.db" />
     <Content Include="Resources\Client\images\test\client\Thumbs.db" />
+    <Content Include="Views\Client\Blog.cshtml" />
+    <Content Include="Views\Client\BlogDetail.cshtml" />
+    <Content Include="Views\Client\Contact.cshtml" />
+    <Content Include="Views\Client\ProductGrid.cshtml" />
+    <Content Include="Views\ClientLogin\DangKy.cshtml" />
+    <Content Include="Views\ClientLogin\Index.cshtml" />
+    <Content Include="Views\Cart\Carts.cshtml" />
+    <Content Include="Views\Cart\Checkout.cshtml" />
+    <Content Include="Views\Cart\PaymentSuccess.cshtml" />
+    <Content Include="Views\Client\ProductDetail.cshtml" />
+    <Content Include="Views\Client\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

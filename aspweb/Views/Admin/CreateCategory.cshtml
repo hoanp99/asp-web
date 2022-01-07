@@ -31,7 +31,7 @@
 
                 <div class="form-group">
                     <label>Mô tả:</label>
-                    @Html.TextAreaFor(model => model.description, new { @class = "form-control", required = "required" })
+                    @Html.TextAreaFor(model => model.description, new { @class = "form-control", required = "required", rows = "4" })
                     @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
                 </div>
 

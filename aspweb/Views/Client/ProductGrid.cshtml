@@ -1,4 +1,5 @@
 ﻿@model aspweb.Models.Entity
+@using PagedList.Mvc;
 @{
     Layout = null;
 }
@@ -43,7 +44,7 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- Body main wrapper start -->
-    
+
     <div class="wrapper">
         <!-- Start Header Style -->
         <header id="htc__header" class="htc__header__area header--one">
@@ -54,10 +55,10 @@
                         <div class="menumenu__container clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
                                 <div class="logo">
-                                    <a href="@Url.Action("Index", "Client")"><img src="~/Resources/Images/logo/4.png" alt="logo images"></a>
+                                    <a href="@Url.Action("Index", "Client")"><img src="~/Resources/Client/images/logo/4.png" alt="logo images"></a>
                                 </div>
                             </div>
-                            <div class="col-md-7 col-lg-8 col-sm-5 col-xs-3">
+                            <div class="col-md-6 col-lg-7 col-sm-4 col-xs-2">
                                 <nav class="main__menu__nav hidden-xs hidden-sm">
                                     <ul class="main__menu">
                                         <li class="drop"><a href="@Url.Action("Index", "Client")">Trang chủ</a></li>
@@ -102,16 +103,21 @@
                                     </nav>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
                                 <div class="header__right">
-                                    <div class="header__search search search__open">
-                                        <a href="#"><i class="icon-magnifier icons"></i></a>
-                                    </div>
-                                    <div class="header__account">
-                                        <a href="#"><i class="icon-user icons"></i></a>
-                                    </div>
-                                    <div class="htc__shopping__cart">
-                                        <a class="cart__menu" href="#"><i class="icon-handbag icons"></i></a>
+                                    <div class="header__right">
+                                        <div class="header__search search search__open">
+                                            <a href="#"><i class="icon-magnifier icons"></i></a>
+                                        </div>
+                                        <div class="header__account">
+                                            <a href="@Url.Action("index","ClientLogin")"><i class="icon-user icons"></i></a>
+                                        </div>
+                                        <div class="header__account">
+                                            <a href="@Url.Action("Carts", "Cart")"><i class="icon-handbag icons"></i></a>
+                                        </div>
+                                        <div class="htc__shopping__cart">
+                                            <a href="@Url.Action("Logout", "ClientLogin")"><i class="icon-logout"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -133,8 +139,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="search__inner">
-                                <form action="#" method="get">
-                                    <input placeholder="Search here... " type="text">
+                                <form action="@Url.Action("ProductGrid","Client")" method="post">
+                                    <input name="searchString" placeholder="Search here... " type="text">
                                     <button type="submit"></button>
                                 </form>
                                 <div class="search__close__btn">
@@ -195,7 +201,7 @@
         <!-- End Offset Wrapper -->
         <!-- Start Bradcaump area -->
         <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(~/Resources/Images/bg/4.jpg) no-repeat scroll center center / cover;">
-            <img src="~/Resources/Images/bg/4.jpg" />
+            <img src="~/Resources/Client/images/bg/4.jpg" />
         </div>
         <!-- End Bradcaump area -->
         <!-- Start Product Grid -->
@@ -206,10 +212,7 @@
                         <div class="htc__product__rightidebar">
                             <div class="htc__grid__top">
                                 <div class="htc__select__option">
-                                    <select class="ht__select">
-                                        <option>Giá thấp -> cao</option>
-                                        <option>Giá cao -> thấp</option>
-                                    </select>
+                                    @Html.ActionLink("Sắp xếp theo giá", "ProductGrid", new { sortOrder = ViewBag.SapTheoGia })
                                 </div>
                                 <div class="ht__pro__qun">
                                     <span></span>
@@ -255,7 +258,12 @@
                                         }
                                         <!-- End Single Product -->
 
+
                                     </div>
+                                    @Html.PagedListPager(Model._Products, page => Url.Action("ProductGrid", new
+                                        {
+                                            page
+                                        }))
                                     <div role="tabpanel" id="list-view" class="single-grid-view tab-pane fade clearfix">
                                         <div class="col-xs-12">
                                             <div class="ht__list__wrap">
@@ -380,12 +388,16 @@
                                             <div id="slider-range"></div>
                                             <div class="slider__range--output">
                                                 <div class="price__output--wrap">
-                                                    <div class="price--output">
-                                                        <span>Giá :</span><input type="text" id="amount" readonly>
-                                                    </div>
-                                                    <div class="price--filter">
-                                                        <a href="#">Lọc</a>
-                                                    </div>
+                                                    @using (@Html.BeginForm())
+                                                    {
+                                                        <div class="price--output">
+                                                            <span> Giá :@Html.TextBox("amountMin")@Html.TextBox("amountMax")</span>
+                                                        </div>
+                                                        <div class="price--filter">
+                                                            <input type="submit" value="Lọc" />
+                                                        </div>
+                                                    }
+
                                                 </div>
                                             </div>
                                         </form>
@@ -397,13 +409,15 @@
                             <div class="htc__category">
                                 <h4 class="title__line--4">Loại</h4>
                                 <ul class="ht__cat__list">
-                                    @foreach(var category in Model._Categories) {
+                                    @foreach (var category in Model._Categories)
+                                    {
 
-                                        <li><a href="#">@category.name</a></li>
+                                        <li>@Html.ActionLink(category.name, "ProductGrid", new { id = category.id.ToString() })</li>
                                     }
-                                    
+
                                 </ul>
                             </div>
+
                             <!-- End Category Area -->
                             <!-- Start Pro Color -->
                             <!-- End Pro Color -->

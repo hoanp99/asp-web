@@ -54,10 +54,10 @@
                         <div class="menumenu__container clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
                                 <div class="logo">
-                                    <a href="@Url.Action("Index", "Client")"><img src="~/Resources/Images/logo/4.png" alt="logo images"></a>
+                                    <a href="@Url.Action("Index", "Client")"><img src="~/Resources/Client/images/logo/4.png" alt="logo images"></a>
                                 </div>
                             </div>
-                            <div class="col-md-7 col-lg-8 col-sm-5 col-xs-3">
+                            <div class="col-md-6 col-lg-7 col-sm-4 col-xs-2">
                                 <nav class="main__menu__nav hidden-xs hidden-sm">
                                     <ul class="main__menu">
                                         <li class="drop"><a href="@Url.Action("Index", "Client")">Trang chủ</a></li>
@@ -102,16 +102,19 @@
                                     </nav>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
                                 <div class="header__right">
                                     <div class="header__search search search__open">
                                         <a href="#"><i class="icon-magnifier icons"></i></a>
                                     </div>
                                     <div class="header__account">
-                                        <a href="#"><i class="icon-user icons"></i></a>
+                                        <a href="@Url.Action("Index","ClientLogin")"><i class="icon-user icons"></i></a>
                                     </div>
                                     <div class="htc__shopping__cart">
                                         <a class="cart__menu" href="#"><i class="icon-handbag icons"></i></a>
+                                    </div>
+                                    <div class="htc__shopping__cart">
+                                        <a href="@Url.Action("Logout", "ClientLogin")">Đăng xuất</a>
                                     </div>
                                 </div>
                             </div>
@@ -133,8 +136,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="search__inner">
-                                <form action="#" method="get">
-                                    <input placeholder="Search here... " type="text">
+                                <form action="@Url.Action("ProductGrid","Client")" method="post">
+                                    <input name="searchString" placeholder="Search here... " type="text">
                                     <button type="submit"></button>
                                 </form>
                                 <div class="search__close__btn">
@@ -194,8 +197,8 @@
         </div>
         <!-- End Offset Wrapper -->
         <!-- Start Bradcaump area -->
-        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(~/Resources/Images/bg/4.jpg) no-repeat scroll center center / cover;">
-            <img src="~/Resources/Images/bg/4.jpg"/>
+        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(~/Resources/Client/images/bg/4.jpg) no-repeat scroll center center / cover; ">
+            <img src="~/Resources/Client/images/bg/4.jpg"/>
         </div>
         <!-- End Bradcaump area -->
         <!-- Start Blog Details Area -->

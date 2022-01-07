@@ -1,0 +1,499 @@
+﻿@using aspweb.Models
+@model List<Cart>
+
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Chi tiết sản phẩm</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/Resources/Client/images/favicon.ico">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+
+    <!-- All css files are included here. -->
+    <!-- Bootstrap fremwork main css -->
+    <link rel="stylesheet" href="~/Resources/Client/css/bootstrap.min.css">
+    <!-- Owl Carousel min css -->
+    <link rel="stylesheet" href="~/Resources/Client/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Resources/Client/css/owl.theme.default.min.css">
+    <!-- This core.css file contents all plugings css file. -->
+    <link rel="stylesheet" href="~/Resources/Client/css/core.css">
+    <!-- Theme shortcodes/elements style -->
+    <link rel="stylesheet" href="~/Resources/Client/css/shortcode/shortcodes.css">
+    <!-- Theme main style -->
+    <link rel="stylesheet" href="~/Resources/Client/style.css">
+    <!-- Responsive css -->
+    <link rel="stylesheet" href="~/Resources/Client/css/responsive.css">
+    <!-- User style -->
+    <link rel="stylesheet" href="~/Resources/Client/css/custom.css">
+
+
+    <!-- Modernizr JS -->
+    <script src="~/Resources/Client/js/vendor/modernizr-3.5.0.min.js"></script>
+</head>
+
+<body>
+    <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Body main wrapper start -->
+    <div class="wrapper">
+        <!-- Start Header Style -->
+        <header id="htc__header" class="htc__header__area header--one">
+            <!-- Start Mainmenu Area -->
+            <div id="sticky-header-with-topbar" class="mainmenu__wrap sticky__header">
+                <div class="container">
+                    <div class="row">
+                        <div class="menumenu__container clearfix">
+                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
+                                <div class="logo">
+                                    <a href="index.html"><img src="~/Resources/Client/images/logo/4.png" alt="logo images"></a>
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-lg-8 col-sm-5 col-xs-3">
+                                <nav class="main__menu__nav hidden-xs hidden-sm">
+                                    <ul class="main__menu">
+                                        <li class="drop"><a href="@Url.Action("index","client")">Trang chủ</a></li>
+
+                                        <li class="drop">
+                                            <a href="@Url.Action("productgrid","client")">Sản phẩm</a>
+                                            <ul class="dropdown">
+                                                <li><a href="@Url.Action("productgrid","client")">Tất cả sản phẩm</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="drop">
+                                            <a href="@Url.Action("blog","client")">Bài viết</a>
+                                            <ul class="dropdown">
+                                                <li><a href="@Url.Action("blog","client")">Kỹ năng làm đẹp</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li><a href="@Url.Action("contact","client")">Liên hệ</a></li>
+                                    </ul>
+                                </nav>
+
+                                <div class="mobile-menu clearfix visible-xs visible-sm">
+                                    <div class="mean-push"></div><nav id="mobile_dropdown" style="display: none;">
+                                        <ul>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="blog.html">blog</a></li>
+                                            <li>
+                                                <a href="#">pages</a>
+                                                <ul>
+                                                    <li><a href="blog.html">Blog</a></li>
+                                                    <li><a href="blog-details.html">Blog Details</a></li>
+                                                    <li><a href="cart.html">Cart page</a></li>
+                                                    <li><a href="checkout.html">checkout</a></li>
+                                                    <li><a href="contact.html">contact</a></li>
+                                                    <li><a href="product-grid.html">product grid</a></li>
+                                                    <li><a href="product-details.html">product details</a></li>
+                                                    <li><a href="wishlist.html">wishlist</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="contact.html">contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
+                                <div class="header__right">
+                                    <div class="header__right">
+                                        <div class="header__search search search__open">
+                                            <a href="#"><i class="icon-magnifier icons"></i></a>
+                                        </div>
+                                        <div class="header__account">
+                                            <a href="@Url.Action("index","ClientLogin")"><i class="icon-user icons"></i></a>
+                                        </div>
+                                        <div class="header__account">
+                                            <a href="@Url.Action("Carts", "Cart")"><i class="icon-handbag icons"></i></a>
+                                        </div>
+                                        <div class="htc__shopping__cart">
+                                            <a href="@Url.Action("Logout", "ClientLogin")"><i class="icon-logout"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-menu-area mean-container">
+                        <div class="mean-bar">
+                            <a href="#nav" class="meanmenu-reveal" style="background:;color:;right:0;left:auto;"><span></span><span></span><span></span></a><nav class="mean-nav">
+                                <ul style="display: none;">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="blog.html">blog</a></li>
+                                    <li>
+                                        <a href="#">pages</a>
+                                        <ul style="display: none;">
+                                            <li><a href="blog.html">Blog</a></li>
+                                            <li><a href="blog-details.html">Blog Details</a></li>
+                                            <li><a href="cart.html">Cart page</a></li>
+                                            <li><a href="checkout.html">checkout</a></li>
+                                            <li><a href="contact.html">contact</a></li>
+                                            <li><a href="product-grid.html">product grid</a></li>
+                                            <li><a href="product-details.html">product details</a></li>
+                                            <li><a href="wishlist.html">wishlist</a></li>
+                                        </ul>
+                                        <a class="mean-expand" href="#" style="font-size: 18px">+</a>
+                                    </li>
+                                    <li class="mean-last"><a href="contact.html">contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Mainmenu Area -->
+        </header>
+        <!-- End Header Area -->
+
+        <div class="body__overlay"></div>
+        <!-- Start Offset Wrapper -->
+        <div class="offset__wrapper">
+            <!-- Start Search Popap -->
+            <div class="search__area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="search__inner">
+                                <form action="#" method="get">
+                                    <input placeholder="Search here... " type="text">
+                                    <button type="submit"></button>
+                                </form>
+                                <div class="search__close__btn">
+                                    <span class="search__close__btn_icon"><i class="zmdi zmdi-close"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Search Popap -->
+            <!-- Start Cart Panel -->
+            <div class="shopping__cart">
+                <div class="shopping__cart__inner">
+                    <div class="offsetmenu__close__btn">
+                        <a href="#"><i class="zmdi zmdi-close"></i></a>
+                    </div>
+                    <div class="shp__cart__wrap">
+                        <div class="shp__single__product">
+                            <div class="shp__pro__thumb">
+                                <a href="#">
+                                    <img src="~/Resources/Client/images/product-2/sm-smg/1.jpg" alt="product images">
+                                </a>
+                            </div>
+                            <div class="shp__pro__details">
+                                <h2><a href="product-details.html">BO&amp;Play Wireless Speaker</a></h2>
+                                <span class="quantity">QTY: 1</span>
+                                <span class="shp__price">$105.00</span>
+                            </div>
+                            <div class="remove__btn">
+                                <a href="#" title="Remove this item"><i class="zmdi zmdi-close"></i></a>
+                            </div>
+                        </div>
+                        <div class="shp__single__product">
+                            <div class="shp__pro__thumb">
+                                <a href="#">
+                                    <img src="~/Resources/Client/images/product-2/sm-smg/2.jpg" alt="product images">
+                                </a>
+                            </div>
+                            <div class="shp__pro__details">
+                                <h2><a href="product-details.html">Brone Candle</a></h2>
+                                <span class="quantity">QTY: 1</span>
+                                <span class="shp__price">$25.00</span>
+                            </div>
+                            <div class="remove__btn">
+                                <a href="#" title="Remove this item"><i class="zmdi zmdi-close"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="shopping__btn">
+                        <li><a href="cart.html">Xem giỏ hàng</a></li>
+                        <li class="shp__checkout"><a href="@Url.Action("Checkout", "Cart")">Thanh toán</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- End Cart Panel -->
+        </div>
+        <!-- End Offset Wrapper -->
+        <!-- Start Bradcaump area -->
+        <div class="ht__bradcaump__area" style="background: rgba(0, 0, 0, 0) url(images/bg/4.jpg) no-repeat scroll center center / cover ;">
+            <div class="ht__bradcaump__wrap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="bradcaump__inner">
+                                <nav class="bradcaump-inner">
+                                    <a class="breadcrumb-item" href="index.html">Trang chủ</a>
+                                    <span class="brd-separetor"><i class="zmdi zmdi-chevron-right"></i></span>
+                                    <span class="breadcrumb-item active">Giỏ hàng</span>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Bradcaump area -->
+        <!-- cart-main-area start -->
+        <div class="cart-main-area ptb--100 bg__white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <form action="#">
+                            <div class="table-content table-responsive">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="product-thumbnail">Sản phẩm</th>
+                                            <th class="product-name">Tên sản phẩm</th>
+                                            <th class="product-price">Giá</th>
+                                            <th class="product-quantity">Số lượng</th>
+                                            <th class="product-subtotal">Tổng tiền</th>
+                                            <th class="product-remove">Xóa</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                        <tr>
+
+                                            <td class="product-thumbnail"><a href="@Url.Action("ProductDetail", "Client", new {id = item.iid})"><img src="~/Resources/Images/@item.simage" alt="product img"></a></td>
+                                            <td class="product-name">
+                                                <a href="#">@item.stitle</a>
+                                            </td>
+
+                                            <td class="product-price"><span class="amount">$ @item.dprice_sale</span></td>
+                                            @using (Html.BeginForm("UpdateCart", "Cart"))
+                                            {
+                                                <td class="product-quantity">
+                                                    <input type="hidden" value="@item.iid" name="id_product" />
+                                                    <input type="number" min="1" name="quantity" value="@item.iquantity" />
+                                                </td>
+                                            
+                                                <td class="product-subtotal">@item.itotal</td>
+                                                <td class="product-remove"><a href="@Url.Action("RemoveCart", "Cart", new {@isp=item.iid})"><i class="icon-trash icons"></i></a></td>
+
+                                            }
+                                            
+
+                                        </tr>
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="buttons-cart--inner">
+                                        <div class="buttons-cart">
+                                            <a href="@Url.Action("Index","Client")">Quay lại mua sắm</a>
+                                        </div>
+                                        <div class="buttons-cart checkout--btn">
+                                            <a href="#">Cập nhật</a>
+                                            <a href="@Url.Action("DeleteCart", "Cart")">Xóa giỏ hàng</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12 col-xs-12 smt-40 xmt-40">
+                                 </div>
+                                    <div class="col-md-6 col-sm-12 col-xs-12 smt-40 xmt-40">
+                                        <div class="htc__cart__total">
+                                            <h6>Tổng giỏ hàng</h6>
+                                            <div class="cart__desk__list">
+                                                <ul class="cart__desc">
+                                                    <li>Tổng trong giỏ</li>
+                                                    <li>Thuế</li>
+                                                    <li>Phí vận chuyển</li>
+                                                </ul>
+                                                <ul class="cart__price">
+                                                    <li>$@ViewBag.stotal</li>
+                                                    <li>$@ViewBag.tax</li>
+                                                    <li>0</li>
+                                                </ul>
+                                            </div>
+                                            <div class="cart__total">
+                                                <span>Tổng thanh toán</span>
+                                                <span>$@ViewBag.Tong</span>
+                                            </div>
+                                            <ul class="payment__btn">
+                                                <li class="active"><a href="@Url.Action("Index", "ClientLogin")">Thanh toán</a></li>
+                                                <li><a href="@Url.Action("Index", "Client")">Quay lại mua sắm</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart-main-area end -->
+        <!-- Start Brand Area -->
+        <div class="htc__brand__area bg__cat--4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ht__brand__inner">
+                            <ul class="brand__list owl-carousel clearfix owl-loaded owl-drag">
+
+
+
+
+
+
+
+
+                                <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-878px, 0px, 0px); transition: all 0s ease 0s; width: 3515px;"><div class="owl-item cloned" style="width: 219.667px;">
+                                <li><a href="#"><img src="~/Resources/Client/images/brand/5.png" alt="brand images"></a></li>
+                        </div><div class="owl-item cloned" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/5.png" alt="brand images"></a></li></div><div class="owl-item cloned" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/1.png" alt="brand images"></a></li></div><div class="owl-item cloned" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/2.png" alt="brand images"></a></li></div><div class="owl-item active" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/1.png" alt="brand images"></a></li></div><div class="owl-item active" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/2.png" alt="brand images"></a></li></div><div class="owl-item" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/3.png" alt="brand images"></a></li></div><div class="owl-item" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/4.png" alt="brand images"></a></li></div><div class="owl-item" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/5.png" alt="brand images"></a></li></div><div class="owl-item" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/5.png" alt="brand images"></a></li></div><div class="owl-item" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/1.png" alt="brand images"></a></li></div><div class="owl-item" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/2.png" alt="brand images"></a></li></div><div class="owl-item cloned" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/1.png" alt="brand images"></a></li></div><div class="owl-item cloned" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/2.png" alt="brand images"></a></li></div><div class="owl-item cloned" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/3.png" alt="brand images"></a></li></div><div class="owl-item cloned" style="width: 219.667px;"><li><a href="#"><img src="~/Resources/Client/images/brand/4.png" alt="brand images"></a></li></div>
+                    </div>
+                </div><div class="owl-nav disabled"><div class="owl-prev">prev</div><div class="owl-next">next</div></div><div class="owl-dots disabled"></div></ul>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <!-- End Brand Area -->
+    <!-- Start Banner Area -->
+    <div class="htc__banner__area">
+        <ul class="banner__list owl-carousel owl-theme clearfix">
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/1.jpg" alt="banner images"></a></li>
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/2.jpg" alt="banner images"></a></li>
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/3.jpg" alt="banner images"></a></li>
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/4.jpg" alt="banner images"></a></li>
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/5.jpg" alt="banner images"></a></li>
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/6.jpg" alt="banner images"></a></li>
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/1.jpg" alt="banner images"></a></li>
+            <li><a href="product-details.html"><img src="~/Resources/Client/images/banner/bn-3/2.jpg" alt="banner images"></a></li>
+        </ul>
+    </div>
+    <!-- End Banner Area -->
+    <!-- End Banner Area -->
+    <!-- Start Footer Area -->
+    <footer id="htc__footer">
+        <!-- Start Footer Widget -->
+        <div class="footer__container bg__cat--1">
+            <div class="container">
+                <div class="row">
+                    <!-- Start Single Footer Widget -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="footer">
+                            <h2 class="title__line--2">Về nhóm </h2>
+                            <div class="ft__details">
+                                <p>Bài tập lập trình CSDL trên nền web</p>
+                                <div class="ft__social__link">
+                                    <ul class="social__link">
+                                        <li><a href="#"><i class="icon-social-twitter icons"></i></a></li>
+
+                                        <li><a href="#"><i class="icon-social-instagram icons"></i></a></li>
+
+                                        <li><a href="#"><i class="icon-social-facebook icons"></i></a></li>
+
+                                        <li><a href="#"><i class="icon-social-google icons"></i></a></li>
+
+                                        <li><a href="#"><i class="icon-social-linkedin icons"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Footer Widget -->
+                    <!-- Start Single Footer Widget -->
+                    <div class="col-md-2 col-sm-6 col-xs-12 xmt-40">
+                        <div class="footer">
+                            <h2 class="title__line--2">Thông tin</h2>
+                            <div class="ft__inner">
+                                <ul class="ft__list">
+                                    <li><a href="#">Về chúng tôi</a></li>
+                                    <li><a href="#">Chính sách vận chuyển</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Footer Widget -->
+                    <!-- Start Single Footer Widget -->
+                    <div class="col-md-2 col-sm-6 col-xs-12 xmt-40 smt-40">
+                        <div class="footer">
+                            <h2 class="title__line--2">Tài khoản</h2>
+                            <div class="ft__inner">
+                                <ul class="ft__list">
+                                    <li><a href="#">Tài khoản của tôi</a></li>
+                                    <li><a href="cart.html">Giỏ hàng</a></li>
+                                    <li><a href="#">Đăng nhập</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Footer Widget -->
+                    <!-- Start Single Footer Widget -->
+                    <div class="col-md-2 col-sm-6 col-xs-12 xmt-40 smt-40">
+                        <div class="footer">
+                            <h2 class="title__line--2">Dịch vụ</h2>
+                            <div class="ft__inner">
+                                <ul class="ft__list">
+                                    <li><a href="@Url.Action("checkout","cart")">Thanh toán</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Footer Widget -->
+                    <!-- Start Single Footer Widget -->
+                    <div class="col-md-3 col-sm-6 col-xs-12 xmt-40 smt-40">
+                        <div class="footer">
+                            <h2 class="title__line--2">Nhận khuyến mại </h2>
+                            <div class="ft__inner">
+                                <div class="news__input">
+                                    <input type="text" placeholder="Mail*">
+                                    <div class="send__btn">
+                                        <a class="fr__btn" href="#">Nhận</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Single Footer Widget -->
+                </div>
+            </div>
+        </div>
+        <!-- End Copyright Area -->
+    </footer>
+    <!-- End Footer Style -->
+    </div>
+    <!-- Body main wrapper end -->
+    <!-- Placed js at the end of the document so the pages load faster -->
+    <!-- jquery latest version -->
+    <!-- Bootstrap framework js -->
+    <!-- All js plugins included in this file. -->
+    <!-- Waypoints.min.js. -->
+    <!-- Main js file that contents all jQuery plugins activation. -->
+    <a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: none;"><i class="zmdi zmdi-chevron-up"></i></a>
+    <script src="~/Resources/Client/js/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap framework js -->
+    <script src="~/Resources/Client/js/bootstrap.min.js"></script>
+    <!-- All js plugins included in this file. -->
+    <script src="~/Resources/Client/js/plugins.js"></script>
+    <script src="~/Resources/Client/js/slick.min.js"></script>
+    <script src="~/Resources/Client/js/owl.carousel.min.js"></script>
+    <!-- Waypoints.min.js. -->
+    <script src="~/Resources/Client/js/waypoints.min.js"></script>
+    <!-- Main js file that contents all jQuery plugins activation. -->
+    <script src="~/Resources/Client/js/main.js"></script>
+
+
+</body>
+
+</html>

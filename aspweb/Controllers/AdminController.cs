@@ -12,7 +12,7 @@ using aspweb.DTO;
 
 namespace aspweb.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private CosmesticShopDB db = new CosmesticShopDB();
@@ -29,7 +29,7 @@ namespace aspweb.Controllers
         #region Categories
         public ActionResult Categories(int? page, string keyword)
         {
-            
+            ViewBag.username = userName;
             var categories = db.tbl_category.Select(p => p);
             if (Request.HttpMethod == "POST")
             {
@@ -43,6 +43,7 @@ namespace aspweb.Controllers
 
         public ActionResult CreateCategory()
         {
+            ViewBag.username = userName;
             return View();
         }
 
@@ -50,6 +51,7 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateCategory([Bind(Include = "name,description")] tbl_category category)
         {
+            ViewBag.username = userName;
             DateTime now = DateTime.Now;
             category.created_date = now;
             category.created_by = userName;
@@ -64,6 +66,7 @@ namespace aspweb.Controllers
 
         public ActionResult DetailCategory(string id)
         {
+            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -79,6 +82,7 @@ namespace aspweb.Controllers
 
         public ActionResult UpdateCategory(string id)
         {
+            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -96,6 +100,7 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UpdateCategory([Bind(Include = "id,name,description,created_date,created_by")] tbl_category category)
         {
+            ViewBag.username = userName;
             DateTime now = DateTime.Now;
             category.updated_date = now;
             category.updated_by = userName;
@@ -110,6 +115,7 @@ namespace aspweb.Controllers
 
         public ActionResult DeleteCategory(string id)
         {
+            ViewBag.username = userName;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -126,6 +132,7 @@ namespace aspweb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCategoryConfirmed(string id)
         {
+            ViewBag.username = userName;
             tbl_category category = db.tbl_category.Find(Int32.Parse(id));
             db.tbl_category.Remove(category);
             db.SaveChanges();

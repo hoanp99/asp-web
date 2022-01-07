@@ -1,7 +1,11 @@
 ﻿
+@model aspweb.Models.tbl_products
 @{
     Layout = null;
 }
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -13,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Place favicon.ico in the root directory -->
-    <link rel="shortcut icon" type="image/x-icon" href="~/Resources/Images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Resources/Client/images/favicon.ico">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 
@@ -37,6 +41,10 @@
 
     <!-- Modernizr JS -->
     <script src="~/Resources/Client/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
 </head>
 
 <body>
@@ -54,10 +62,10 @@
                         <div class="menumenu__container clearfix">
                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5">
                                 <div class="logo">
-                                    <a href="@Url.Action("Index", "Client")"><img src="~/Resources/Images/logo/4.png" alt="logo images"></a>
+                                    <a href="@Url.Action("Index", "Client")"><img src="~/Resources/Client/images/logo/4.png" alt="logo images"></a>
                                 </div>
                             </div>
-                            <div class="col-md-7 col-lg-8 col-sm-5 col-xs-3">
+                            <div class="col-md-6 col-lg-7 col-sm-4 col-xs-2">
                                 <nav class="main__menu__nav hidden-xs hidden-sm">
                                     <ul class="main__menu">
                                         <li class="drop"><a href="@Url.Action("Index", "Client")">Trang chủ</a></li>
@@ -102,16 +110,21 @@
                                     </nav>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-lg-2 col-sm-4 col-xs-4">
+                            <div class="col-md-4 col-lg-3 col-sm-5 col-xs-5">
                                 <div class="header__right">
-                                    <div class="header__search search search__open">
-                                        <a href="#"><i class="icon-magnifier icons"></i></a>
-                                    </div>
-                                    <div class="header__account">
-                                        <a href="#"><i class="icon-user icons"></i></a>
-                                    </div>
-                                    <div class="htc__shopping__cart">
-                                        <a class="cart__menu" href="#"><i class="icon-handbag icons"></i></a>
+                                    <div class="header__right">
+                                        <div class="header__search search search__open">
+                                            <a href="#"><i class="icon-magnifier icons"></i></a>
+                                        </div>
+                                        <div class="header__account">
+                                            <a href="@Url.Action("index","ClientLogin")"><i class="icon-user icons"></i></a>
+                                        </div>
+                                        <div class="header__account">
+                                            <a href="@Url.Action("Carts", "Cart")"><i class="icon-handbag icons"></i></a>
+                                        </div>
+                                        <div class="htc__shopping__cart">
+                                            <a href="@Url.Action("Logout", "ClientLogin")"><i class="icon-logout"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -133,8 +146,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="search__inner">
-                                <form action="#" method="get">
-                                    <input placeholder="Search here... " type="text">
+                                <form action="@Url.Action("ProductGrid","Client")" method="get">
+                                    <input name="searchString" placeholder="Search here... " type="text">
                                     <button type="submit"></button>
                                 </form>
                                 <div class="search__close__btn">
@@ -153,25 +166,11 @@
                         <a href="#"><i class="zmdi zmdi-close"></i></a>
                     </div>
                     <div class="shp__cart__wrap">
+
                         <div class="shp__single__product">
                             <div class="shp__pro__thumb">
                                 <a href="#">
-                                    <img src="~/Resources/Images/product-2/sm-smg/1.jpg" alt="product images">
-                                </a>
-                            </div>
-                            <div class="shp__pro__details">
-                                <h2><a href="product-details.html">BO&Play Wireless Speaker</a></h2>
-                                <span class="quantity">QTY: 1</span>
-                                <span class="shp__price">$105.00</span>
-                            </div>
-                            <div class="remove__btn">
-                                <a href="#" title="Remove this item"><i class="zmdi zmdi-close"></i></a>
-                            </div>
-                        </div>
-                        <div class="shp__single__product">
-                            <div class="shp__pro__thumb">
-                                <a href="#">
-                                    <img src="~/Resources/Images/product-2/sm-smg/2.jpg" alt="product images">
+                                    <img src="~/Resources/Client/images/product-2/sm-smg/2.jpg" alt="product images">
                                 </a>
                             </div>
                             <div class="shp__pro__details">
@@ -185,7 +184,7 @@
                         </div>
                     </div>
                     <ul class="shopping__btn">
-                        <li><a href="cart.html">Xem giỏ hàng</a></li>
+                        <li><a href="@Url.Action("Carts","Cart")">Xem giỏ hàng</a></li>
                         <li class="shp__checkout"><a href="checkout.html">Thanh toán</a></li>
                     </ul>
                 </div>
@@ -207,13 +206,13 @@
                                 <div class="product__big__images">
                                     <div class="portfolio-full-image tab-content">
                                         <div role="tabpanel" class="tab-pane fade in active" id="img-tab-1">
-                                            <img src="~/Resources/Images/product-2/big-img/1.jpg" alt="full-image">
+                                            <img src="~/Resources/Images/@Html.DisplayFor(model => model.image)" alt="full-image">
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="img-tab-2">
-                                            <img src="~/Resources/Images/product-2/big-img/2.jpg" alt="full-image">
+                                            <img src="~/Resources/Images/@Html.DisplayFor(model => model.image)" alt="full-image">
                                         </div>
                                         <div role="tabpanel" class="tab-pane fade" id="img-tab-3">
-                                            <img src="~/Resources/Images/product-2/big-img/3.jpg" alt="full-image">
+                                            <img src="~/Resources/Images/@Html.DisplayFor(model => model.image)" alt="full-image">
                                         </div>
                                     </div>
                                 </div>
@@ -222,17 +221,17 @@
                                 <ul class="product__small__images" role="tablist">
                                     <li role="presentation" class="pot-small-img active">
                                         <a href="#img-tab-1" role="tab" data-toggle="tab">
-                                            <img src="~/Resources/Images/product-2/sm-img-3/3.jpg" alt="small-image">
+                                            <img src="~/Resources/Images/@Html.DisplayFor(model => model.image)" alt="small-image">
                                         </a>
                                     </li>
                                     <li role="presentation" class="pot-small-img">
                                         <a href="#img-tab-2" role="tab" data-toggle="tab">
-                                            <img src="~/Resources/Images/product-2/sm-img-3/1.jpg" alt="small-image">
+                                            <img src="~/Resources/Images/@Html.DisplayFor(model => model.image)" alt="small-image">
                                         </a>
                                     </li>
                                     <li role="presentation" class="pot-small-img">
                                         <a href="#img-tab-3" role="tab" data-toggle="tab">
-                                            <img src="~/Resources/Images/product-2/sm-img-3/2.jpg" alt="small-image">
+                                            <img src="~/Resources/Images/@Html.DisplayFor(model => model.image)" alt="small-image">
                                         </a>
                                     </li>
                                 </ul>
@@ -241,8 +240,8 @@
                         </div>
                         <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12 smt-40 xmt-40">
                             <div class="ht__product__dtl">
-                                <h2>jean shirt to sassy girl</h2>
-                                <h6>Model: <span>MNG001</span></h6>
+                                <h2>@Html.DisplayFor(model => model.title)</h2>
+                                <h6>Model: <span>@Html.DisplayFor(model => model.tbl_category.name)</span></h6>
                                 <ul class="rating">
                                     <li><i class="icon-star icons"></i></li>
                                     <li><i class="icon-star icons"></i></li>
@@ -251,17 +250,24 @@
                                     <li class="old"><i class="icon-star icons"></i></li>
                                 </ul>
                                 <ul class="pro__prize">
-                                    <li class="old__prize">$82.5</li>
-                                    <li>$75.2</li>
+                                    <li class="old__prize">@Html.DisplayFor(model => model.price)</li>
+                                    <li>@Html.DisplayFor(model => model.price_sale)</li>
                                 </ul>
-                                <p class="pro__info">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.  Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan</p>
+                                <p class="pro__info">@Html.DisplayFor(model => model.short_description)</p>
                                 <div class="ht__pro__desc">
                                     <div class="sin__desc">
-                                        <p><span>Tình trạng:</span> Còn hàng</p>
+                                        <p><span>Số lượng còn:</span> @Html.DisplayFor(model => model.quantity_left)</p>
+                                    </div>
+                                    <div class="form-group col-md">
+                                        <a href="@Url.Action("AddToCart", "Cart", new {@iid = Model.id, @strUrl=Request.Url.ToString()}) " class="btn btn-primary">
+                                            <i class="fas fa-shopping-cart"></i>
+                                            <span class="text">Thêm vào giỏ hàng</span>
+                                        </a>
                                     </div>
 
+
                                     <div class="sin__desc product__share__link">
-                                        <p><span>Share this:</span></p>
+                                        <p><span>Chia sẻ với:</span></p>
                                         <ul class="pro__share">
                                             <li><a href="#" target="_blank"><i class="icon-social-twitter icons"></i></a></li>
 
@@ -304,12 +310,10 @@
                         <!-- Start Single Content -->
                         <div role="tabpanel" id="description" class="pro__single__content tab-pane fade in active">
                             <div class="pro__tab__content__inner">
-                                <p>Formfitting clothing is all about a sweet spot. That elusive place where an item is tight but not clingy, sexy but not cloying, cool but not over the top. Alexandra Alvarez’s label, Alix, hits that mark with its range of comfortable, minimal, and neutral-hued bodysuits.</p>
-                                <h4 class="ht__pro__title">Description</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem</p>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
-                                <h4 class="ht__pro__title">Standard Featured</h4>
-                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in</p>
+                                <h4 class="ht__pro__title">Mô tả</h4>
+                                <p>@Html.DisplayFor(model => model.detail_description)</p>
+                                <h4 class="ht__pro__title">Tính năng chính</h4>
+                                <p>@Html.DisplayFor(model => model.detail_description)</p>
                             </div>
                         </div>
                         <!-- End Single Content -->
@@ -352,14 +356,14 @@
                 <div class="col-md-12">
                     <div class="ht__brand__inner">
                         <ul class="brand__list owl-carousel clearfix">
+                            <li><a href="#"><img src="~/Resources/Client/images/brand/1.png" alt="brand images"></a></li>
+                            <li><a href="#"><img src="~/Resources/Client/images/brand/2.png" alt="brand images"></a></li>
+                            <li><a href="#"><img src="~/Resources/Client/images/brand/3.png" alt="brand images"></a></li>
+                            <li><a href="#"><img src="~/Resources/Client/images/brand/4.png" alt="brand images"></a></li>
+                            <li><a href="#"><img src="~/Resources/Client/images/brand/5.png" alt="brand images"></a></li>
+                            <li><a href="#"><img src="~/Resources/Client/images/brand/5.png" alt="brand images"></a></li>
                             <li><a href="#"><img src="~/Resources/Images/brand/1.png" alt="brand images"></a></li>
-                            <li><a href="#"><img src="~/Resources/Images/brand/2.png" alt="brand images"></a></li>
-                            <li><a href="#"><img src="~/Resources/Images/brand/3.png" alt="brand images"></a></li>
-                            <li><a href="#"><img src="~/Resources/Images/brand/4.png" alt="brand images"></a></li>
-                            <li><a href="#"><img src="~/Resources/Images/brand/5.png" alt="brand images"></a></li>
-                            <li><a href="#"><img src="~/Resources/Images/brand/5.png" alt="brand images"></a></li>
-                            <li><a href="#"><img src="~/Resources/Images/brand/1.png" alt="brand images"></a></li>
-                            <li><a href="#"><img src="~/Resources/Images/brand/2.png" alt="brand images"></a></li>
+                            <li><a href="#"><img src="~/Resources/Client/images/brand/2.png" alt="brand images"></a></li>
                         </ul>
                     </div>
                 </div>
@@ -463,7 +467,7 @@
                     <div class="col-xs-12">
                         <div class="copyright__inner">
                             <p>Copyright© <a href="https://freethemescloud.com/">Free themes Cloud</a> 2018. All right reserved.</p>
-                            <a href="#"><img src="~/Resources/Images/others/shape/paypol.png" alt="payment images"></a>
+                            <a href="#"><img src="~/Resources/Client/images/others/shape/paypol.png" alt="payment images"></a>
                         </div>
                     </div>
                 </div>

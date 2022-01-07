@@ -83,7 +83,7 @@
                         @Html.DisplayFor(modelItem => item.price_sale)
                     </td>
                     <td class="align-middle">
-                        @Html.DisplayFor(modelItem => item.quantity)
+                        @Html.DisplayFor(modelItem => item.quantity_left)
                     </td>
                     <td>
                         @{ 
@@ -106,7 +106,7 @@
 
             </tbody>
         </table>
-        @Html.PagedListPager(Model, page => Url.Action("Accounts", "Admin", new { page }))
+        @Html.PagedListPager(Model, page => Url.Action("Products", "Admin", new { page }))
     </div>
 </div>
 

@@ -31,11 +31,19 @@ namespace aspweb.Controllers
             using (var db = new CosmesticShopDB())
             {
                 model.password = PasswordEncode.Encode(model.password);
-                bool isValid = db.tbl_users.Any(x => x.username == model.username && x.password == model.password && x.tbl_roles.name == "admin");
+                bool isValid = db.tbl_users.Any(x => x.username == model.username && x.password == model.password);
+                var role = db.tbl_users.Where(x => x.username == model.username && x.password == model.password).FirstOrDefault().role_id;
                 if (isValid)
                 {
-                    FormsAuthentication.SetAuthCookie(model.username, false);
-                    return RedirectToAction("Home", "Admin");
+                    FormsAuthentication.SetAuthCookie(model.username, false);                   
+                    if (role != 1)
+                    {
+                        return RedirectToAction("Index", "Client");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Home", "Admin");
+                    }
                 }
                 else
                 {
